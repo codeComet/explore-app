@@ -11,7 +11,10 @@ import {
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { login } from "../redux/features/authSlice";
 
 const useStyles = makeStyles({
   container: {
@@ -33,6 +36,8 @@ const useStyles = makeStyles({
 
 export default function Login() {
   const classes = useStyles();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -49,6 +54,7 @@ export default function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
+    dispatch(login(formData));
   };
 
   return (
