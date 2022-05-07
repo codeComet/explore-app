@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -38,6 +38,7 @@ export default function Login() {
   const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { loading, error } = useSelector((state) => ({ ...state.auth }));
 
   const [formData, setFormData] = useState({
     email: "",
@@ -54,8 +55,14 @@ export default function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    dispatch(login(formData));
+    dispatch(login({ formData, navigate, toast }));
   };
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
 
   return (
     <Box className={classes.container}>
@@ -73,6 +80,7 @@ export default function Login() {
               name="email"
               required
               fullWidth
+              value={formData.email}
               sx={{ marginBottom: "1rem" }}
               onChange={handleChange}
             />
@@ -81,13 +89,20 @@ export default function Login() {
               label="Password"
               type="password"
               name="password"
+              value={formData.password}
               required
               fullWidth
               onChange={handleChange}
             />
           </CardContent>
           <CardActions>
-            <Button variant="contained" color="primary" fullWidth type="submit">
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              type="submit"
+              disabled={loading}
+            >
               Sign in
             </Button>
           </CardActions>
