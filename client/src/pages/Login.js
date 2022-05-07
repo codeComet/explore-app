@@ -59,9 +59,7 @@ export default function Login() {
   };
 
   useEffect(() => {
-    if (error) {
-      toast.error(error);
-    }
+    error && toast.error(error);
   }, [error]);
 
   return (

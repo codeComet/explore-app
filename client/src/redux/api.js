@@ -5,3 +5,4 @@ const API = axios.create({
 });
 
 export const login = (formData) => API.post("/user/signin", formData);
+export const signup = (formData) => API.post("/user/signup", formData);
