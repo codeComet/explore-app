@@ -56,7 +56,7 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    //console.log(formData);
     dispatch(login({ formData, navigate, toast }));
   };
 
