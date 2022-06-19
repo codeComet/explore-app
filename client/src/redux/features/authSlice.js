@@ -13,7 +13,7 @@ export const login = createAsyncThunk(
       //console.log(error);
       // toast.error("Login failed!");
       return rejectWithValue(error.response.data);
-      // console.log(rejectWithValue(error.response.data.message));
+      // console.log(rejectWithValue(error.response.data));
     }
   }
 );

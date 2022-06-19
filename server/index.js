@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 });
 
 mongoose
-  .connect(process.env.CONNECTION_URL, {
+  .connect("mongodb+srv://bishal:Bishal10@cluster0.aeufx.mongodb.net/?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
