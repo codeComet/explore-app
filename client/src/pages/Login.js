@@ -15,8 +15,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { googleLogin, login } from "../redux/features/authSlice";
-import { GoogleLogin } from "react-google-login";
 import GoogleIcon from "@mui/icons-material/Google";
+import { GoogleLogin } from "react-google-login";
 
 const useStyles = makeStyles({
   container: {
@@ -69,6 +69,7 @@ export default function Login() {
     const { googleId, tokenId } = res;
     const result = { email, name, googleId, tokenId };
     dispatch(googleLogin({ result, navigate, toast }));
+    console.log(result);
   };
 
   const googleFailure = (error) => {
@@ -117,24 +118,27 @@ export default function Login() {
               Sign in
             </Button>
           </CardActions>
+
+          <GoogleLogin
+            clientId="725031431148-98vq8r72bca4dbtssddlkeidcvjjru7v.apps.googleusercontent.com"
+            render={(renderProps) => (
+              <Button
+                variant="contained"
+                color="warning"
+                style={{ width: "96%", margin: "0px 8px" }}
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}
+              >
+                <GoogleIcon style={{ marginRight: "5px" }} /> Sign-in with
+                Google
+              </Button>
+            )}
+            onSuccess={googleSuccess}
+            onFailure={googleFailure}
+            cookiePolicy={"single_host_origin"}
+            plugin_name="React"
+          />
         </form>
-        <GoogleLogin
-          clientId="213102595301-mfbjlr5rq60urrkcrdcfpjuc5hqfcjgb.apps.googleusercontent.com"
-          render={(renderProps) => (
-            <Button
-              variant="contained"
-              color="warning"
-              style={{ width: "96%", margin: "0px 8px" }}
-              disabled={renderProps.disabled}
-              onClick={renderProps.onClick}
-            >
-              <GoogleIcon style={{ marginRight: "5px" }} /> Sign In with google
-            </Button>
-          )}
-          onSuccess={googleSuccess}
-          onFailure={googleFailure}
-          cookiePolicy={"single_host_origin"}
-        />
         <Divider sx={{ margin: "0.5rem 0" }} />
         <Box sx={{ textAlign: "center" }}>
           <Link to={"/register"} style={{ textDecoration: "none" }}>
