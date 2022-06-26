@@ -1,0 +1,21 @@
+.form-parent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 90vh;
+}
+
+.form-container {
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+
+.form-element {
+  margin: 0.8rem auto;
+}
+
+.form-element input {
+  border-radius: 0.3rem;
+}
