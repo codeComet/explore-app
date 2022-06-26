@@ -4,6 +4,7 @@ export const createPost = async (req, res) => {
   const post = req.body;
   const newPost = new postModel({
     ...post,
+    creator: req.userId,
     createdAt: new Date().toISOString(),
   });
 

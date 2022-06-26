@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, Button, Autocomplete, Chip } from "@mui/material";
 import FileBase from "react-file-base64";
+import { useDispatch, useSelector } from "react-redux";
+import { createPost } from "../redux/features/postSlice";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import "./addPost.css";
 
 const AddEditPost = () => {
+  const { loading, error } = useSelector((state) => ({ ...state.post }));
+  const { user } = useSelector((state) => ({ ...state.auth }));
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [postData, setPostData] = useState({
     title: "",
     description: "",
-    image: "",
+    img: "",
     tags: [],
   });
 
@@ -21,7 +29,23 @@ const AddEditPost = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(postData);
+    const updatedPostData = { ...postData, name: user?.result?.name };
+    dispatch(createPost({ updatedPostData, navigate, toast }));
+    clearForm();
   };
+
+  const clearForm = () => {
+    setPostData({
+      title: "",
+      description: "",
+      tags: [],
+      img: "",
+    });
+  };
+
+  useEffect(() => {
+    error && toast.error(error);
+  }, [error]);
 
   return (
     <div className="form-parent">
@@ -35,6 +59,7 @@ const AddEditPost = () => {
               variant="outlined"
               required
               fullWidth
+              value={postData.title}
               onChange={handleChange}
             />
           </div>
@@ -47,6 +72,7 @@ const AddEditPost = () => {
               fullWidth
               multiline
               rows={3}
+              value={postData.description}
               onChange={handleChange}
             />
           </div>
@@ -68,7 +94,8 @@ const AddEditPost = () => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="tags"
+                  label="Tags"
+                  value={postData.tags}
                   placeholder="Press enter after typing"
                 />
               )}
@@ -80,14 +107,23 @@ const AddEditPost = () => {
             <FileBase
               type="file"
               multiple={false}
-              onDone={({ base64 }) =>
-                setPostData({ ...postData, image: base64 })
-              }
+              onDone={({ base64 }) => setPostData({ ...postData, img: base64 })}
+              value={postData.img}
             />
           </div>
           <div className="form-element">
             <Button variant="contained" color="primary" type="submit" fullWidth>
               Add Post
+            </Button>
+          </div>
+          <div className="form-element">
+            <Button
+              variant="contained"
+              color="error"
+              onClick={clearForm}
+              fullWidth
+            >
+              Clear
             </Button>
           </div>
         </form>

@@ -5,6 +5,7 @@ import { Login, Register, Home, AddEditPost } from "./pages";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
 import { setUser } from "./redux/features/authSlice";
+import Navbar from "./components/Navbar";
 
 function App() {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ function App() {
   return (
     <Router>
       <div className="App">
+        <Navbar />
         <ToastContainer />
         <Routes>
           <Route path="/" element={<Home />} />

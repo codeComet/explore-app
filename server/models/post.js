@@ -7,6 +7,7 @@ const postSchema = mongoose.Schema({
   },
   description: { type: String },
   tags: [String],
+  name: { type: String },
   img: {
     type: String,
   },

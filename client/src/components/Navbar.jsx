@@ -17,10 +17,11 @@ import { deepOrange } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import { setLogout } from "../redux/features/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const pages = [
-  { name: "Products", link: "/products" },
-  { name: "Explore", link: "/explore" },
+  { name: "Add post", link: "/addPost" },
+  { name: "Dashboard", link: "/dashboard" },
   { name: "Blogs", link: "/blogs" },
 ];
 
@@ -57,6 +58,7 @@ const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state?.auth?.user);
 
   const handleOpenNavMenu = (event) => {
@@ -76,7 +78,8 @@ const Navbar = () => {
 
   const handleLogout = () => {
     dispatch(setLogout());
-    localStorage.removeItem("token");
+    localStorage.clear();
+    navigate("/login");
   };
 
   useEffect(() => {

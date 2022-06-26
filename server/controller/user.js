@@ -69,12 +69,13 @@ export const signup = async (req, res) => {
 };
 
 export const googleLogin = async (req, res) => {
-  const { email, name, token, googleId } = req.body;
+  const { email, name, tokenId, googleId } = req.body;
+  console.log(email, name, tokenId, googleId);
   try {
     const existingUser = await Usermodel.findOne({ email });
     if (existingUser) {
       const result = { _id: existingUser._id.toString(), email, name };
-      return res.status(200).json({ result, token });
+      return res.status(200).json({ result, tokenId });
     }
     const result = await Usermodel.create({
       email,
@@ -82,7 +83,7 @@ export const googleLogin = async (req, res) => {
       googleId,
     });
 
-    res.status(200).json({ result, token });
+    res.status(200).json({ result, tokenId });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong!" });
     console.log(error);
