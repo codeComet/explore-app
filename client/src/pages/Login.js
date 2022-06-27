@@ -64,10 +64,12 @@ export default function Login() {
     error && toast.error(error);
   }, [error]);
 
-  const googleSuccess = (res) => {
-    const { email, name } = res?.profileObj;
-    const { googleId, tokenId } = res;
-    const result = { email, name, googleId, tokenId };
+  const googleSuccess = (resp) => {
+    const email = resp?.profileObj?.email;
+    const name = resp?.profileObj?.name;
+    const token = resp?.tokenId;
+    const googleId = resp?.googleId;
+    const result = { email, name, token, googleId };
     dispatch(googleLogin({ result, navigate, toast }));
     console.log(result);
   };
