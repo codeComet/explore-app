@@ -82,10 +82,6 @@ const Navbar = () => {
     navigate("/login");
   };
 
-  useEffect(() => {
-    console.log(user?.result?.name);
-  }, [user]);
-
   return (
     <AppBar position="static" style={{ background: "#011120" }}>
       <Container maxWidth="xl">

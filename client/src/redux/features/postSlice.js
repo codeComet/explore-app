@@ -15,6 +15,18 @@ export const createPost = createAsyncThunk(
   }
 );
 
+export const getPosts = createAsyncThunk(
+  "/posts",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await api.fetchPosts();
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const postSlice = createSlice({
   name: "post",
   initialState: {
@@ -30,9 +42,20 @@ const postSlice = createSlice({
     },
     [createPost.fulfilled]: (state, action) => {
       state.loading = false;
-      state.posts = [...state.posts, action.payload];
+      state.posts = [action.payload];
     },
     [createPost.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+    [getPosts.pending]: (state) => {
+      state.loading = true;
+    },
+    [getPosts.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.posts = action.payload;
+    },
+    [getPosts.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload.message;
     },

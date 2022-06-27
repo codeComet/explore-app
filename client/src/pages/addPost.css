@@ -9,9 +9,9 @@
 
 .form-container {
   border: 1px solid rgba(209, 209, 209, 0.25);
-  box-shadow: 10px 9px 5px -4px rgba(209, 209, 209, 0.76);
-  -webkit-box-shadow: 10px 9px 5px -4px rgba(209, 209, 209, 0.76);
-  -moz-box-shadow: 10px 9px 5px -4px rgba(209, 209, 209, 0.76);
+  box-shadow: 10px 9px 5px -4px rgb(0 0 0 / 28%);
+  -webkit-box-shadow: 10px 9px 5px -4px rgb(0 0 0 / 28%);
+  -moz-box-shadow: 10px 9px 5px -4px rgb(0 0 0 / 28%);
   width: 400px;
   padding: 20px;
 }
@@ -24,6 +24,22 @@
   border-radius: 0.3rem;
 }
 
+.form-element input::placeholder {
+  color: #fff !important;
+}
+
 input[type="file"] {
   border-radius: 0;
+}
+
+.MuiChip-labelMedium {
+  color: #fff;
+}
+
+.MuiChip-deleteIcon {
+  color: rgb(0 0 0 / 64%) !important;
+}
+
+.MuiAutocomplete-clearIndicator {
+  color: #fff !important;
 }

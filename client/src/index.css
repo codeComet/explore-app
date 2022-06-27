@@ -1,6 +1,10 @@
 body {
   margin: 0;
+  height: 100%;
   font-family: "Poppins", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url("./img/blurry-gradient-haikei\ \(1\).png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
