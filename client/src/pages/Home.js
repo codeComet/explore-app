@@ -13,7 +13,7 @@ const useStyles = makeStyles({
     width: "60%",
     display: "flex",
     flexWrap: "wrap",
-    justifyContent: "space-between",
+    justifyContent: "center",
     margin: "1rem auto",
   },
   loading: {
@@ -47,16 +47,20 @@ const Home = () => {
     <div className={classes.cardParent}>
       <div className={classes.CardContainer}>
         {posts.length === 0 ? (
-          <p>No posts to show :(</p>
+          <p style={{ color: "#fff", fontSize: "1.3rem" }}>
+            No posts to show :(
+          </p>
         ) : (
           posts.map((post) => (
             <div key={post._id}>
               <PostCard
+                id={post._id}
                 title={post.title}
                 description={post.description}
                 img={post.img}
                 tags={post.tags}
                 name={post.name}
+                likes={post.likes}
               />
             </div>
           ))

@@ -66,7 +66,6 @@ const AddEditPost = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(postData);
     const updatedPostData = { ...postData, name: user?.result?.name };
     dispatch(createPost({ updatedPostData, navigate, toast }));
     clearForm();
@@ -147,7 +146,7 @@ const AddEditPost = () => {
             />
           </div>
           <div className="form-element">
-            <label>Select Image</label>
+            <label style={{ color: "#fff" }}>Select Image</label>
             <br />
             <FileBase
               type="file"
@@ -158,19 +157,48 @@ const AddEditPost = () => {
             />
           </div>
           <div className="form-element">
-            <Button variant="contained" color="primary" type="submit" fullWidth>
-              Add Post
-            </Button>
+            {loading ? (
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                fullWidth
+                disabled
+              >
+                Add Post
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                fullWidth
+              >
+                Add Post
+              </Button>
+            )}
           </div>
           <div className="form-element">
-            <Button
-              variant="contained"
-              color="error"
-              onClick={clearForm}
-              fullWidth
-            >
-              Clear
-            </Button>
+            {loading ? (
+              <Button
+                variant="contained"
+                color="error"
+                onClick={clearForm}
+                fullWidth
+                disabled
+              >
+                Clear
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                color="error"
+                onClick={clearForm}
+                fullWidth
+              >
+                Clear
+              </Button>
+            )}
           </div>
         </form>
       </div>

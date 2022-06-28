@@ -11,10 +11,20 @@ import {
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { makeStyles } from "@mui/styles";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { likePost } from "../redux/features/postSlice";
 
 const useStyles = makeStyles({
+  postCard: {
+    width: "300px !important",
+    padding: ".75rem !important",
+    margin: "1rem !important",
+    backgroundColor: "#00073a !important",
+    boxShadow: "2px 5px 8px #060505cc !important",
+  },
   tags: {
-    paddingLeft: "16px",
+    paddingLeft: "10px",
   },
   tag: {
     margin: ".2rem",
@@ -31,27 +41,38 @@ const useStyles = makeStyles({
     color: "#606060",
     fontSize: "12px !important",
   },
+  likeCount: {
+    marginLeft: ".3rem",
+    color: "#606060",
+    fontSize: "12px !important",
+  },
 });
 
-const PostCard = ({ title, description, img, name, tags }) => {
+const PostCard = ({ id, title, description, img, name, tags, likes }) => {
   const classes = useStyles();
+  // const dispatch = useDispatch();
+  const post = useSelector((state) =>
+    state.post.posts.find((post) => post._id === id)
+  );
   const [liked, setLiked] = useState(false);
 
   const handleLike = () => {
+    // dispatch(likePost(id));
+    console.log(post);
     setLiked(!liked);
+    // console.log(id);
+  };
+
+  const excerpt = (str) => {
+    if (str.length > 60) {
+      str = str.slice(0, 60) + "...";
+    }
+    return str;
   };
 
   return (
     <div>
-      <Card
-        sx={{
-          minWidth: 300,
-          maxWidth: 350,
-          padding: 2,
-          backgroundColor: "#00073a",
-          boxShadow: "2px 5px 8px #060505cc",
-        }}
-      >
+      <Card className={classes.postCard}>
         <CardMedia component="img" alt={title} height="200" image={img} />
         <CardContent>
           <Typography
@@ -64,7 +85,10 @@ const PostCard = ({ title, description, img, name, tags }) => {
           </Typography>
           <div>
             <Typography variant="body2" className={classes.description}>
-              {description}
+              {excerpt(description)}{" "}
+              <Link to={`/posts/${id}`} style={{ color: "#ab112c" }}>
+                Read More
+              </Link>
             </Typography>
           </div>
           <Typography variant="body2" className={classes.creator}>
@@ -72,8 +96,9 @@ const PostCard = ({ title, description, img, name, tags }) => {
           </Typography>
         </CardContent>
         <div className={classes.tags}>
-          {tags.map((tag) => (
+          {tags.map((tag, index) => (
             <Chip
+              key={index}
               label={tag}
               color="success"
               variant="outlined"
@@ -81,13 +106,14 @@ const PostCard = ({ title, description, img, name, tags }) => {
             />
           ))}
         </div>
-        <CardActions>
+        <CardActions style={{ marginTop: ".5rem" }}>
           <Button size="small" onClick={handleLike}>
             {liked ? (
               <FavoriteIcon style={{ color: "red" }} />
             ) : (
               <FavoriteBorderIcon />
             )}
+            <span className={classes.likeCount}>{likes.length}</span>
           </Button>
           <Button size="small" style={{ textTransform: "none" }}>
             Details
