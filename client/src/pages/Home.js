@@ -25,9 +25,6 @@ const useStyles = makeStyles({
     alignItems: "center",
     height: "80vh",
   },
-  progress: {
-    color: "#fff !important",
-  },
 });
 
 const Home = () => {

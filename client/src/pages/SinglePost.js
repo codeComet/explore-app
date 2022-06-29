@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@mui/styles";
-import { Chip, Typography } from "@mui/material";
+import { Chip, Typography, Skeleton, Box } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getSinglePost } from "../redux/features/postSlice";
 
 const useStyles = makeStyles({
   singlePostParent: {
@@ -81,70 +84,95 @@ const useStyles = makeStyles({
     justifyContent: "center",
     alignItems: "center",
   },
+  loading: {
+    width: "60%",
+    margin: "1rem auto",
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    height: "80vh",
+  },
+  skeleton: {
+    height: "350px !important",
+    transformOrigin: "0 10% !important",
+  },
+  skeleton2: {
+    marginTop: "-100px !important",
+  },
 });
 
 const SinglePost = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const { singlePost } = useSelector((state) => state.post);
+
+  useEffect(() => {
+    dispatch(getSinglePost(id));
+  }, [dispatch, id]);
 
   return (
     <div className={classes.singlePostParent}>
-      <div className={classes.singlePostContainer}>
-        <div className={classes.imgContainer}>
-          <img
-            src="https://images.unsplash.com/photo-1656356594129-2dae4ec88923?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2071&q=80"
-            alt="img"
-          />
+      {Object.keys(singlePost).length === 0 ? (
+        <div className={classes.loading}>
+          <Box sx={{ width: "58%", marginRight: "2%", my: 5 }}>
+            <Skeleton variant="rectangular" width={"100%"} height={450} />
+          </Box>
+          <Box sx={{ width: "40%", pt: 5 }}>
+            <Skeleton height="30px" />
+            <Skeleton className={classes.skeleton} />
+            <Skeleton width="80%" className={classes.skeleton2} />
+            <Skeleton height="45px" />
+          </Box>
         </div>
-        <div className={classes.infoContainer}>
-          <div className={classes.header}>
-            <Typography variant="h3" className={classes.title}>
-              Title
+      ) : (
+        <div className={classes.singlePostContainer}>
+          <div className={classes.imgContainer}>
+            <img src={singlePost?.img} alt={singlePost?.title} />
+          </div>
+          <div className={classes.infoContainer}>
+            <div className={classes.header}>
+              <Typography variant="h3" className={classes.title}>
+                {singlePost?.title}
+              </Typography>
+              <div className={classes.heart}>
+                <FavoriteBorderIcon style={{ color: "#fff" }} />
+              </div>
+            </div>
+            <Typography variant="body2" className={classes.description}>
+              {singlePost?.description}
             </Typography>
-            <div className={classes.heart}>
-              <FavoriteBorderIcon style={{ color: "#fff" }} />
+            <div className={classes.tagsContainer}>
+              <div className={classes.tags}>
+                <Typography variant="body2" className={classes.tagText}>
+                  Tags:
+                </Typography>
+                {singlePost?.tags.map((tag, i) => (
+                  <Chip
+                    key={i}
+                    label={tag}
+                    variant="outlined"
+                    color="warning"
+                    size="small"
+                    className={classes.chips}
+                  />
+                ))}
+              </div>
+              <div className={classes.creator}>
+                <Typography variant="body2" className={classes.tagText}>
+                  by - {singlePost?.name}
+                </Typography>
+              </div>
             </div>
-          </div>
-          <Typography variant="body2" className={classes.description}>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deleniti
-            asperiores eum iure temporibus quia voluptatibus praesentium veniam
-            dolorum dolore eaque, labore adipisci ducimus repudiandae quos! Ut
-            incidunt maxime molestias in.
-          </Typography>
-          <div className={classes.tagsContainer}>
-            <div className={classes.tags}>
+            <div className={classes.postDate}>
               <Typography variant="body2" className={classes.tagText}>
-                Tags:
-              </Typography>
-              <Chip
-                label="tag1"
-                variant="outlined"
-                color="warning"
-                size="small"
-                className={classes.chips}
-              />
-              <Chip
-                label="tag2"
-                variant="outlined"
-                color="warning"
-                size="small"
-                className={classes.chips}
-              />
-              <Chip
-                label="tag3"
-                variant="outlined"
-                color="warning"
-                size="small"
-                className={classes.chips}
-              />
-            </div>
-            <div className={classes.creator}>
-              <Typography variant="body2" className={classes.tagText}>
-                John doe
+                posted on - {singlePost?.createdAt.split("T")[0]}
               </Typography>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -27,6 +27,18 @@ export const getPosts = createAsyncThunk(
   }
 );
 
+export const getSinglePost = createAsyncThunk(
+  "/posts/:id",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await api.fetchSinglePost(id);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const likePost = createAsyncThunk(
   "/posts/likePost",
   async ({ postId }, { rejectWithValue }) => {
@@ -68,6 +80,17 @@ const postSlice = createSlice({
       state.posts = action.payload;
     },
     [getPosts.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+    [getSinglePost.pending]: (state) => {
+      state.loading = true;
+    },
+    [getSinglePost.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.singlePost = action.payload;
+    },
+    [getSinglePost.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload.message;
     },
