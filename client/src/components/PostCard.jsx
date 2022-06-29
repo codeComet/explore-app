@@ -34,7 +34,6 @@ const useStyles = makeStyles({
   },
   description: {
     color: "#bbb",
-    lineClamp: 3,
   },
   creator: {
     marginTop: "1rem !important",

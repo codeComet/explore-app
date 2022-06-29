@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@mui/styles";
-import { CircularProgress } from "@mui/material";
+import { Skeleton, Box } from "@mui/material";
 import PostCard from "../components/PostCard";
 import { getPosts } from "../redux/features/postSlice";
 
@@ -17,10 +17,13 @@ const useStyles = makeStyles({
     margin: "1rem auto",
   },
   loading: {
+    width: "60%",
+    margin: "1rem auto",
     display: "flex",
+    flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center",
-    height: "90vh",
+    height: "80vh",
   },
   progress: {
     color: "#fff !important",
@@ -39,7 +42,17 @@ const Home = () => {
   if (loading) {
     return (
       <div className={classes.loading}>
-        <CircularProgress className={classes.progress} />
+        {new Array(6).fill(0).map((_, i) => (
+          <Box sx={{ width: 300, marginRight: 2, my: 5 }} key={i}>
+            <Skeleton variant="rectangular" width={300} height={220} />
+            <Box sx={{ pt: 0.5 }}>
+              <Skeleton />
+              <Skeleton />
+              <Skeleton width="60%" />
+              <Skeleton height="45px" />
+            </Box>
+          </Box>
+        ))}
       </div>
     );
   }
