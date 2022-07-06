@@ -20,6 +20,7 @@ import { setLogout } from "../redux/features/authSlice";
 import { useNavigate } from "react-router-dom";
 
 const pages = [
+  { name: "Home", link: "/" },
   { name: "Add post", link: "/addPost" },
   { name: "Dashboard", link: "/dashboard" },
   { name: "Blogs", link: "/blogs" },
@@ -83,7 +84,7 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position="static" style={{ background: "#011120" }}>
+    <AppBar position="sticky" style={{ background: "#011120" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <ExploreIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -105,7 +106,12 @@ const Navbar = () => {
             Explore
           </Typography>
           {user ? (
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "flex", md: "none" },
+              }}
+            >
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -172,7 +178,13 @@ const Navbar = () => {
             Explore
           </Typography>
           {user ? (
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "none", md: "flex" },
+                justifyContent: "center",
+              }}
+            >
               {pages.map((page) => (
                 <Button
                   key={page.name}

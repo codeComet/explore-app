@@ -109,8 +109,10 @@ const SinglePost = () => {
   const { singlePost } = useSelector((state) => state.post);
 
   useEffect(() => {
-    dispatch(getSinglePost(id));
-  }, [dispatch, id]);
+    if (id) {
+      dispatch(getSinglePost(id));
+    }
+  }, [id]);
 
   return (
     <div className={classes.singlePostParent}>

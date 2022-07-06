@@ -3,3 +3,4 @@ export { default as Register } from "./Register";
 export { default as Home } from "./Home";
 export { default as AddEditPost } from "./AddEditPost";
 export { default as SinglePost } from "./SinglePost";
+export { default as Dashboard } from "./Dashboard";

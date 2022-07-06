@@ -23,3 +23,4 @@ export const fetchPosts = () => API.get("/posts");
 export const fetchSinglePost = (id) => API.get(`/posts/${id}`);
 export const createPost = (formData) => API.post("/posts/addPost", formData);
 export const likePost = (postId) => API.post("/posts/likePost", postId);
+export const getDashboard = (userId) => API.get(`/posts/dashboard/${userId}`); //user id

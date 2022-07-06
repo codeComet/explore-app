@@ -36,6 +36,21 @@ export const fetchSinglePost = async (req, res) => {
   }
 };
 
+export const dashboard = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "User doesn't exist" });
+    }
+
+    const getUserPosts = await postModel.find({ creator: id });
+    res.status(200).json(getUserPosts);
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong!" });
+  }
+};
+
 // export const likePost = async (req, res) => {
 //   const { postId } = req.body;
 //   try {

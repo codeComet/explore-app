@@ -51,6 +51,18 @@ export const likePost = createAsyncThunk(
   }
 );
 
+export const getSingleUserPosts = createAsyncThunk(
+  "/posts/dashboard/:id",
+  async (userId, { rejectWithValue }) => {
+    try {
+      const response = await api.getDashboard(userId);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const postSlice = createSlice({
   name: "post",
   initialState: {
@@ -91,6 +103,17 @@ const postSlice = createSlice({
       state.singlePost = action.payload;
     },
     [getSinglePost.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+    [getSingleUserPosts.pending]: (state) => {
+      state.loading = true;
+    },
+    [getSingleUserPosts.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.postsFromUser = action.payload;
+    },
+    [getSingleUserPosts.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload.message;
     },
