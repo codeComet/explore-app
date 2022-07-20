@@ -14,42 +14,6 @@ import { makeStyles } from "@mui/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const useStyles = makeStyles({
-  dashboardParent: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    "& h1": {
-      fontSize: "2rem",
-      color: "white",
-      margin: "1rem",
-    },
-  },
-  dashboardContainer: {
-    display: "flex",
-    flexDirection: "column",
-    width: "100%",
-    margin: "1rem auto",
-    justifyContent: "space-around",
-    flexWrap: "wrap",
-    alignItems: "center",
-  },
-  loading: {
-    width: "60%",
-    margin: "1rem auto",
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "80vh",
-  },
-  singlePost: {
-    width: "45%",
-    margin: "1rem auto",
-  },
-});
-
 const Dashboard = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -60,7 +24,15 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(getSingleUserPosts(user?.result?._id));
-  }, [dispatch, user]);
+    console.log(postsFromUser);
+  }, [dispatch, user, postsFromUser]);
+
+  const excerpt = (str) => {
+    if (str.length > 60) {
+      str = str.slice(0, 60) + "...";
+    }
+    return str;
+  };
 
   if (loading) {
     return (
@@ -79,12 +51,6 @@ const Dashboard = () => {
       </div>
     );
   }
-  const excerpt = (str) => {
-    if (str.length > 60) {
-      str = str.slice(0, 60) + "...";
-    }
-    return str;
-  };
 
   return (
     <div className={classes.dashboardParent}>
@@ -144,3 +110,39 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+const useStyles = makeStyles({
+  dashboardParent: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    "& h1": {
+      fontSize: "2rem",
+      color: "white",
+      margin: "1rem",
+    },
+  },
+  dashboardContainer: {
+    display: "flex",
+    flexDirection: "column",
+    width: "100%",
+    margin: "1rem auto",
+    justifyContent: "space-around",
+    flexWrap: "wrap",
+    alignItems: "center",
+  },
+  loading: {
+    width: "60%",
+    margin: "1rem auto",
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "80vh",
+  },
+  singlePost: {
+    width: "45%",
+    margin: "1rem auto",
+  },
+});
