@@ -17,15 +17,14 @@ import DeleteIcon from "@mui/icons-material/Delete";
 const Dashboard = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => ({ ...state.auth }));
+  const user = JSON.parse(localStorage.getItem("user"));
   const { postsFromUser, loading } = useSelector((state) => ({
     ...state.post,
   }));
 
   useEffect(() => {
     dispatch(getSingleUserPosts(user?.result?._id));
-    console.log(postsFromUser);
-  }, [dispatch, user, postsFromUser]);
+  }, []);
 
   const excerpt = (str) => {
     if (str.length > 60) {
@@ -101,9 +100,9 @@ const Dashboard = () => {
               </Card>
             </div>
           ))
-        ) : (
+        ) : loading == false && postsFromUser.length == 0 ? (
           <h1>No posts yet</h1>
-        )}
+        ) : null}
       </div>
     </div>
   );

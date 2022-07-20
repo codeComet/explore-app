@@ -33,7 +33,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/addPost" element={<AddEditPost />} />
           <Route path="/posts/:id" element={<SinglePost />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard/:id" element={<Dashboard />} />
         </Routes>
       </div>
     </Router>

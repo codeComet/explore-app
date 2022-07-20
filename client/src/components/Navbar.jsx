@@ -19,13 +19,6 @@ import Badge from "@mui/material/Badge";
 import { setLogout } from "../redux/features/authSlice";
 import { useNavigate } from "react-router-dom";
 
-const pages = [
-  { name: "Home", link: "/" },
-  { name: "Add post", link: "/addPost" },
-  { name: "Dashboard", link: "/dashboard" },
-  { name: "Blogs", link: "/blogs" },
-];
-
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
     backgroundColor: "#44b700",
@@ -61,6 +54,13 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state?.auth?.user);
+
+  const pages = [
+    { name: "Home", link: "/" },
+    { name: "Add post", link: "/addPost" },
+    { name: "Dashboard", link: `/dashboard/${user?.result?._id}` },
+    { name: "Blogs", link: "/blogs" },
+  ];
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
