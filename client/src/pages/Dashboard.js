@@ -13,6 +13,7 @@ import {
 import { makeStyles } from "@mui/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const classes = useStyles();
@@ -64,38 +65,43 @@ const Dashboard = () => {
                   alignItems: "center",
                   // backgroundColor: "#00073a !important",
                   // boxShadow: "2px 5px 8px #060505cc !important",
+                  justifyContent: "space-between",
                 }}
               >
-                <CardMedia
-                  component="img"
-                  sx={{ width: 151, height: 151, backgroundSize: "cover" }}
-                  image={post.img}
-                  alt={post.title}
-                />
-                <Box sx={{ display: "flex", flexDirection: "row" }}>
-                  <CardContent sx={{ flex: "1 0 auto" }}>
-                    <Typography component="div" variant="h5">
-                      {post.title}
-                    </Typography>
-                    <Typography
-                      variant="subtitle1"
-                      color="text.secondary"
-                      component="div"
-                    >
-                      {excerpt(post.description)}
-                    </Typography>
-                  </CardContent>
-                  <Box
-                    sx={{ display: "flex", alignItems: "center", pl: 1, pb: 1 }}
-                  >
+                <Box sx={{ display: "flex" }}>
+                  <CardMedia
+                    component="img"
+                    sx={{ width: 151, height: 151, backgroundSize: "cover" }}
+                    image={post.img}
+                    alt={post.title}
+                  />
+                  <Box sx={{ display: "flex", flexDirection: "row" }}>
+                    <CardContent sx={{ flex: "1 0 auto", width: "80%" }}>
+                      <Typography component="div" variant="h5">
+                        {post.title}
+                      </Typography>
+                      <Typography
+                        variant="subtitle1"
+                        color="text.secondary"
+                        component="div"
+                      >
+                        {excerpt(post.description)}
+                      </Typography>
+                    </CardContent>
+                  </Box>
+                </Box>
+                <Box
+                  sx={{ display: "flex", alignItems: "center", px: 2, pb: 1 }}
+                >
+                  <Link to={`/addPost/${post._id}`}>
                     <IconButton aria-label="edit">
                       <EditIcon />
                     </IconButton>
+                  </Link>
 
-                    <IconButton aria-label="delete">
-                      <DeleteIcon />
-                    </IconButton>
-                  </Box>
+                  <IconButton aria-label="delete">
+                    <DeleteIcon style={{ color: "red" }} />
+                  </IconButton>
                 </Box>
               </Card>
             </div>
