@@ -14,6 +14,8 @@ import { makeStyles } from "@mui/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
+import { deletePost } from "../redux/features/postSlice";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
   const classes = useStyles();
@@ -26,6 +28,12 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(getSingleUserPosts(user?.result?._id));
   }, []);
+
+  const handleDelete = (postId) => {
+    if (window.confirm("Are you sure you want to delete this post?")) {
+      dispatch(deletePost({ postId, toast }));
+    }
+  };
 
   const excerpt = (str) => {
     if (str.length > 60) {
@@ -99,7 +107,10 @@ const Dashboard = () => {
                     </IconButton>
                   </Link>
 
-                  <IconButton aria-label="delete">
+                  <IconButton
+                    aria-label="delete"
+                    onClick={() => handleDelete(post._id)}
+                  >
                     <DeleteIcon style={{ color: "red" }} />
                   </IconButton>
                 </Box>

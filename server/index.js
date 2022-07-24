@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 
 mongoose
   .connect(
-    "mongodb+srv://bishal:Bishal10@cluster0.aeufx.mongodb.net/?retryWrites=true&w=majority",
+    "mongodb+srv://bishal:Bishal10@cluster0.aeufx.mongodb.net/?retryWrites=true&w=majority?directConnection=true",
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
