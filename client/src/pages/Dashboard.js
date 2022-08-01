@@ -32,6 +32,7 @@ const Dashboard = () => {
   const handleDelete = (postId) => {
     if (window.confirm("Are you sure you want to delete this post?")) {
       dispatch(deletePost({ postId, toast }));
+      window.location.reload();
     }
   };
 
@@ -78,36 +79,13 @@ const Dashboard = () => {
                   justifyContent: "space-between",
                 }}
               >
-<<<<<<< HEAD
-                <>
-=======
                 <Box sx={{ display: "flex" }}>
->>>>>>> aa29ef7466dbbdd69fbd1f8238ed22d663c8ff17
                   <CardMedia
                     component="img"
                     sx={{ width: 151, height: 151, backgroundSize: "cover" }}
                     image={post.img}
                     alt={post.title}
                   />
-<<<<<<< HEAD
-                  <CardContent sx={{ flex: "1 0 auto" }}>
-                    <Typography component="div" variant="h5">
-                      {post.title}
-                    </Typography>
-                    <Typography
-                      variant="subtitle1"
-                      color="text.secondary"
-                      component="div"
-                    >
-                      {excerpt(post.description)}
-                    </Typography>
-                  </CardContent>
-                </>
-                <Box sx={{ display: "flex", flexDirection: "row" }}>
-                  <Box
-                    sx={{ display: "flex", alignItems: "center", px: 2, pb: 1 }}
-                  >
-=======
                   <Box sx={{ display: "flex", flexDirection: "row" }}>
                     <CardContent sx={{ flex: "1 0 auto", width: "80%" }}>
                       <Typography component="div" variant="h5">
@@ -127,7 +105,6 @@ const Dashboard = () => {
                   sx={{ display: "flex", alignItems: "center", px: 2, pb: 1 }}
                 >
                   <Link to={`/addPost/${post._id}`}>
->>>>>>> aa29ef7466dbbdd69fbd1f8238ed22d663c8ff17
                     <IconButton aria-label="edit">
                       <EditIcon />
                     </IconButton>

@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as api from "../api.js";
 
 export const createPost = createAsyncThunk(
-  "/posts/createPost",
+  "/posts/addPost",
   async ({ updatedPostData, navigate, toast }, { rejectWithValue }) => {
     try {
       const response = await api.createPost(updatedPostData);
