@@ -8,6 +8,7 @@ import {
   AddEditPost,
   SinglePost,
   Dashboard,
+  PrivateRoute,
 } from "./pages";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
@@ -31,9 +32,31 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/addPost" element={<AddEditPost />} />
+          <Route
+            path="/addPost"
+            element={
+              <PrivateRoute>
+                <AddEditPost />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/addPost/:id"
+            element={
+              <PrivateRoute>
+                <AddEditPost />
+              </PrivateRoute>
+            }
+          />
           <Route path="/posts/:id" element={<SinglePost />} />
-          <Route path="/dashboard/:id" element={<Dashboard />} />
+          <Route
+            path="/dashboard/:id"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </div>
     </Router>
