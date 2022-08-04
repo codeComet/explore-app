@@ -7,7 +7,21 @@ export const createPost = createAsyncThunk(
     try {
       const response = await api.createPost(updatedPostData);
       toast.success("Post created successfully!");
-      // navigate("/");
+      navigate("/");
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const editPost = createAsyncThunk(
+  "/posts/editPost/:id",
+  async ({ id, updatedPostData, navigate, toast }, { rejectWithValue }) => {
+    try {
+      const response = await api.editPost(id, updatedPostData);
+      toast.success("Post updated successfully!");
+      navigate("/");
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -94,6 +108,17 @@ const postSlice = createSlice({
       state.posts = [action.payload];
     },
     [createPost.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+    [editPost.pending]: (state) => {
+      state.loading = true;
+    },
+    [editPost.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.posts = [action.payload];
+    },
+    [editPost.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload.message;
     },

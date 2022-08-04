@@ -18,6 +18,21 @@ export const createPost = async (req, res) => {
   }
 };
 
+export const editPost = async (req, res) => {
+  const post = req.body;
+  const id = req.params.id;
+  // console.log(post, req.params);
+  try {
+    const postToEdit = await postModel.findByIdAndUpdate(id, post, {
+      new: false,
+    });
+    res.status(200).json(postToEdit);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
 export const fetchPosts = async (req, res) => {
   try {
     const posts = await postModel.find();

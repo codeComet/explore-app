@@ -41,7 +41,7 @@ function App() {
             }
           />
           <Route
-            path="/addPost/:id"
+            path="/editPost/:id"
             element={
               <PrivateRoute>
                 <AddEditPost />

@@ -104,7 +104,7 @@ const Dashboard = () => {
                 <Box
                   sx={{ display: "flex", alignItems: "center", px: 2, pb: 1 }}
                 >
-                  <Link to={`/addPost/${post._id}`}>
+                  <Link to={`/editPost/${post._id}`}>
                     <IconButton aria-label="edit">
                       <EditIcon />
                     </IconButton>
