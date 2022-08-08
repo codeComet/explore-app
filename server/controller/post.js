@@ -24,7 +24,7 @@ export const editPost = async (req, res) => {
   // console.log(post, req.params);
   try {
     const postToEdit = await postModel.findByIdAndUpdate(id, post, {
-      new: false,
+      new: true,
     });
     res.status(200).json(postToEdit);
   } catch (error) {
@@ -100,29 +100,6 @@ export const deletePost = async (req, res) => {
     }
     await postModel.findByIdAndDelete(id);
     res.status(200).json({ message: "Post deleted successfully" });
-  } catch (error) {
-    res.status(404).json({ message: "Something went wrong" });
-  }
-};
-
-export const updatedPost = async (req, res) => {
-  const { id } = req.params;
-  const { title, description, tags, img } = req.body;
-
-  try {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ message: "Post doesn't exist" });
-    }
-    const updatedPost = {
-      title,
-      description,
-      tags,
-      img,
-      _id: id,
-    };
-
-    await postModel.findByIdAndUpdate(id, updatedPost, { new: true });
-    res.status(200).json(updatedPost);
   } catch (error) {
     res.status(404).json({ message: "Something went wrong" });
   }

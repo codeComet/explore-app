@@ -9,6 +9,7 @@ import {
   Typography,
   CardMedia,
   IconButton,
+  Chip,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import EditIcon from "@mui/icons-material/Edit";
@@ -98,6 +99,18 @@ const Dashboard = () => {
                       >
                         {excerpt(post.description)}
                       </Typography>
+                      <Box className={classes.tags}>
+                        {post.tags.map((tag) => (
+                          <Chip
+                            key={tag}
+                            label={tag}
+                            size="small"
+                            className={classes.tag}
+                            variant="outlined"
+                            color="primary"
+                          />
+                        ))}
+                      </Box>
                     </CardContent>
                   </Box>
                 </Box>
@@ -161,5 +174,9 @@ const useStyles = makeStyles({
   singlePost: {
     width: "45%",
     margin: "1rem auto",
+  },
+
+  tag: {
+    margin: ".5rem .3rem 0 0",
   },
 });

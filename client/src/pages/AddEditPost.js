@@ -120,9 +120,7 @@ const AddEditPost = () => {
         </h1>
         <form onSubmit={handleSubmit}>
           {loading ? (
-            <p style={{ textAlign: "center", color: "#fff" }}>
-              Getting post data...
-            </p>
+            <p style={{ textAlign: "center", color: "#fff" }}>Please wait...</p>
           ) : (
             <>
               <div className="form-element">
@@ -152,34 +150,64 @@ const AddEditPost = () => {
                 />
               </div>
               <div className="form-element">
-                <Autocomplete
-                  multiple
-                  id="tags-filled"
-                  options={[]}
-                  defaultValue={[]}
-                  freeSolo
-                  onChange={(e, value) =>
-                    setPostData((state) => ({ ...state, tags: value }))
-                  }
-                  renderTags={(value, getTagProps) =>
-                    value.map((option, index) => (
-                      <Chip
-                        label={option}
-                        {...getTagProps({ index })}
-                        className={classes.chip}
+                {singlePost ? (
+                  <Autocomplete
+                    multiple
+                    id="tags-filled"
+                    options={[]}
+                    defaultValue={singlePost.tags}
+                    freeSolo
+                    onChange={(e, value) =>
+                      setPostData((state) => ({ ...state, tags: value }))
+                    }
+                    renderTags={(value, getTagProps) =>
+                      value.map((option, index) => (
+                        <Chip
+                          label={option}
+                          {...getTagProps({ index })}
+                          className={classes.chip}
+                        />
+                      ))
+                    }
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Tags"
+                        value={postData.tags}
+                        className={classes.root}
+                        placeholder="Press enter after typing"
                       />
-                    ))
-                  }
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Tags"
-                      value={postData.tags}
-                      className={classes.root}
-                      placeholder="Press enter after typing"
-                    />
-                  )}
-                />
+                    )}
+                  />
+                ) : (
+                  <Autocomplete
+                    multiple
+                    id="tags-filled"
+                    options={[]}
+                    defaultValue={[]}
+                    freeSolo
+                    onChange={(e, value) =>
+                      setPostData((state) => ({ ...state, tags: value }))
+                    }
+                    renderTags={(value, getTagProps) =>
+                      value.map((option, index) => (
+                        <Chip
+                          label={option}
+                          {...getTagProps({ index })}
+                          className={classes.chip}
+                        />
+                      ))
+                    }
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Tags"
+                        className={classes.root}
+                        placeholder="Press enter after typing"
+                      />
+                    )}
+                  />
+                )}
               </div>
               <div className="form-element">
                 <label style={{ color: "#fff" }}>Select Image</label>
@@ -205,7 +233,7 @@ const AddEditPost = () => {
                 fullWidth
                 disabled
               >
-                {singlePost ? "Save Changes" : "Add Post"}
+                {singlePost ? "Saving Changes" : "Adding Post"}
               </Button>
             ) : (
               <Button
