@@ -9,6 +9,7 @@ import {
   SinglePost,
   Dashboard,
   PrivateRoute,
+  NotFound,
 } from "./pages";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
@@ -57,6 +58,7 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </Router>
