@@ -15,38 +15,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { likePost } from "../redux/features/postSlice";
 
-const useStyles = makeStyles({
-  postCard: {
-    width: "300px !important",
-    padding: ".75rem !important",
-    margin: "1rem !important",
-    backgroundColor: "#00073a !important",
-    boxShadow: "2px 5px 8px #060505cc !important",
-  },
-  tags: {
-    paddingLeft: "10px",
-  },
-  tag: {
-    margin: ".2rem",
-  },
-  title: {
-    color: "#fff",
-  },
-  description: {
-    color: "#bbb",
-  },
-  creator: {
-    marginTop: "1rem !important",
-    color: "#606060",
-    fontSize: "12px !important",
-  },
-  likeCount: {
-    marginLeft: ".3rem",
-    color: "#606060",
-    fontSize: "12px !important",
-  },
-});
-
 const PostCard = ({ id, title, description, img, name, tags, likes }) => {
   const classes = useStyles();
   // const dispatch = useDispatch();
@@ -114,9 +82,11 @@ const PostCard = ({ id, title, description, img, name, tags, likes }) => {
             )}
             <span className={classes.likeCount}>{likes.length}</span>
           </Button>
-          <Button size="small" style={{ textTransform: "none" }}>
-            Details
-          </Button>
+          <Link to={`/posts/${id}`}>
+            <Button size="small" style={{ textTransform: "none" }}>
+              Details
+            </Button>
+          </Link>
         </CardActions>
       </Card>
     </div>
@@ -124,3 +94,38 @@ const PostCard = ({ id, title, description, img, name, tags, likes }) => {
 };
 
 export default PostCard;
+
+const useStyles = makeStyles({
+  postCard: {
+    width: "300px !important",
+    padding: ".75rem !important",
+    margin: "1rem !important",
+    backgroundColor: "#00073a !important",
+    boxShadow: "2px 5px 8px #060505cc !important",
+    "& a": {
+      textDecoration: "none",
+    },
+  },
+  tags: {
+    paddingLeft: "10px",
+  },
+  tag: {
+    margin: ".2rem",
+  },
+  title: {
+    color: "#fff",
+  },
+  description: {
+    color: "#bbb",
+  },
+  creator: {
+    marginTop: "1rem !important",
+    color: "#606060",
+    fontSize: "12px !important",
+  },
+  likeCount: {
+    marginLeft: ".3rem",
+    color: "#606060",
+    fontSize: "12px !important",
+  },
+});

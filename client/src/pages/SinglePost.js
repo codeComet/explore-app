@@ -7,101 +7,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getSinglePost } from "../redux/features/postSlice";
 
-const useStyles = makeStyles({
-  singlePostParent: {
-    padding: "1rem",
-  },
-  singlePostContainer: {
-    width: "60%",
-    margin: "2rem auto",
-    display: "flex",
-    justifyContent: "space-around",
-    alignItems: "flex-start",
-    flexWrap: "wrap",
-  },
-  imgContainer: {
-    width: "50%",
-    textAlign: "center",
-    "& img": {
-      width: "90%",
-      objectFit: "contain",
-      borderRadius: "5px",
-      boxShadow: "10px 10px 30px rgb(0 0 0 / 70%)",
-      transition: "transform .4s ease-in-out",
-    },
-    "& img:hover": {
-      transform: "scale(1.2)",
-    },
-  },
-  infoContainer: {
-    width: "48%",
-    marginLeft: "2%",
-  },
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  tagsContainer: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    flexWrap: "wrap",
-    margin: "1rem 0",
-  },
-  tags: {
-    display: "flex",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    flexWrap: "wrap",
-    margin: "1rem 0",
-  },
-  title: {
-    fontFamily: "Poppins, sans-serif !important",
-    color: "white",
-    width: "80%",
-  },
-  heart: {
-    width: "20%",
-    textAlign: "right",
-  },
-  tagText: {
-    fontFamily: "Poppins, sans-serif !important",
-    marginRight: "10px !important",
-    color: "#c9c9c9",
-  },
-  chips: {
-    margin: "0 0.2rem",
-  },
-  description: {
-    color: "#e5e5e5",
-    fontSize: "1rem !important",
-    margin: "1rem 0 !important",
-    lineHeight: "1.5rem !important",
-  },
-  creator: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  loading: {
-    width: "60%",
-    margin: "1rem auto",
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    alignItems: "flex-start",
-    height: "80vh",
-  },
-  skeleton: {
-    height: "350px !important",
-    transformOrigin: "0 10% !important",
-  },
-  skeleton2: {
-    marginTop: "-100px !important",
-  },
-});
-
 const SinglePost = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -180,3 +85,95 @@ const SinglePost = () => {
 };
 
 export default SinglePost;
+
+const useStyles = makeStyles({
+  singlePostParent: {
+    padding: "1rem",
+  },
+  singlePostContainer: {
+    width: "60%",
+    margin: "2rem auto",
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "flex-start",
+    flexWrap: "wrap",
+  },
+  imgContainer: {
+    width: "50%",
+    textAlign: "center",
+    "& img": {
+      width: "80%",
+      objectFit: "contain",
+      borderRadius: "5px",
+      boxShadow: "10px 10px 30px rgb(0 0 0 / 70%)",
+      transition: "transform .4s ease-in-out",
+    },
+  },
+  infoContainer: {
+    width: "48%",
+    marginLeft: "2%",
+  },
+  header: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  tagsContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexWrap: "wrap",
+    margin: "1rem 0",
+  },
+  tags: {
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    flexWrap: "wrap",
+    margin: "1rem 0",
+  },
+  title: {
+    fontFamily: "Poppins, sans-serif !important",
+    color: "white",
+    width: "80%",
+  },
+  heart: {
+    width: "20%",
+    textAlign: "right",
+  },
+  tagText: {
+    fontFamily: "Poppins, sans-serif !important",
+    marginRight: "10px !important",
+    color: "#c9c9c9",
+  },
+  chips: {
+    margin: "0 0.2rem",
+  },
+  description: {
+    color: "#e5e5e5",
+    fontSize: "1rem !important",
+    margin: "1rem 0 !important",
+    lineHeight: "1.5rem !important",
+  },
+  creator: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  loading: {
+    width: "60%",
+    margin: "1rem auto",
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    height: "80vh",
+  },
+  skeleton: {
+    height: "350px !important",
+    transformOrigin: "0 10% !important",
+  },
+  skeleton2: {
+    marginTop: "-100px !important",
+  },
+});
