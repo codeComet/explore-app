@@ -1,59 +1,44 @@
-import { useEffect, useState } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
+import { useState } from "react";
+import {
+  Badge,
+  MenuItem,
+  Tooltip,
+  Button,
+  Avatar,
+  Container,
+  Menu,
+  Typography,
+  IconButton,
+  Toolbar,
+  Box,
+  AppBar,
+  OutlinedInput,
+  InputAdornment,
+  InputLabel,
+  FormControl,
+} from "@mui/material";
 import ExploreIcon from "@mui/icons-material/Explore";
 import { useDispatch, useSelector } from "react-redux";
 import { deepOrange } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
-import Badge from "@mui/material/Badge";
 import { setLogout } from "../redux/features/authSlice";
 import { useNavigate } from "react-router-dom";
-
-const StyledBadge = styled(Badge)(({ theme }) => ({
-  "& .MuiBadge-badge": {
-    backgroundColor: "#44b700",
-    color: "#44b700",
-    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
-    "&::after": {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      borderRadius: "50%",
-      animation: "ripple 1.2s infinite ease-in-out",
-      border: "1px solid currentColor",
-      content: '""',
-    },
-  },
-  "@keyframes ripple": {
-    "0%": {
-      transform: "scale(.8)",
-      opacity: 1,
-    },
-    "100%": {
-      transform: "scale(2.4)",
-      opacity: 0,
-    },
-  },
-}));
+import SearchIcon from "@mui/icons-material/Search";
+import MenuIcon from "@mui/icons-material/Menu";
+import { makeStyles } from "@mui/styles";
+import useComponentVisible from "../useComponentVisible";
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [searchBarShow, setSearchBarShow] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state?.auth?.user);
+  const classes = useStyles();
+  const { ref, isComponentVisible, setIsComponentVisible } =
+    useComponentVisible(true);
 
   const pages = [
     { name: "Home", link: "/" },
@@ -77,6 +62,11 @@ const Navbar = () => {
     setAnchorElUser(null);
   };
 
+  const handleSearchBarShow = () => {
+    // setSearchBarShow(!searchBarShow);
+    setIsComponentVisible(true);
+  };
+
   const handleLogout = () => {
     dispatch(setLogout());
     localStorage.clear();
@@ -88,6 +78,7 @@ const Navbar = () => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <ExploreIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+
           <Typography
             variant="h6"
             noWrap
@@ -105,10 +96,11 @@ const Navbar = () => {
           >
             Explore
           </Typography>
+
           {user ? (
             <Box
               sx={{
-                flexGrow: 1,
+                flexGrow: { xs: 0, sm: 1, md: 1 },
                 display: { xs: "flex", md: "none" },
               }}
             >
@@ -158,7 +150,15 @@ const Navbar = () => {
               sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
             ></Box>
           )}
-          <ExploreIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          <ExploreIcon
+            sx={{
+              display: { xs: "flex", md: "none" },
+              flexGrow: { xs: 1, sm: 0, md: 0 },
+              mr: 1,
+              justifyContent: "flex-start",
+            }}
+          />
+
           <Typography
             variant="h5"
             noWrap
@@ -166,7 +166,7 @@ const Navbar = () => {
             href=""
             sx={{
               mr: 2,
-              display: { xs: "flex", md: "none" },
+              display: { xs: "none", sm: "flex", md: "none" },
               flexGrow: 1,
               fontFamily: "monospace",
               fontWeight: 700,
@@ -177,6 +177,7 @@ const Navbar = () => {
           >
             Explore
           </Typography>
+
           {user ? (
             <Box
               sx={{
@@ -205,7 +206,51 @@ const Navbar = () => {
 
           {/* Conditional rendering */}
           {user ? (
-            <Box sx={{ flexGrow: 0 }}>
+            <Box
+              sx={{ flexGrow: 0, display: "flex", alignItems: "center" }}
+              ref={ref}
+            >
+              {isComponentVisible ? null : (
+                <Button onClick={handleSearchBarShow}>
+                  <SearchIcon style={{ color: "#FFF" }} />
+                </Button>
+              )}
+              {isComponentVisible ? (
+                <form>
+                  <FormControl
+                    sx={{
+                      my: 1,
+                      marginRight: {
+                        xs: "0rem",
+                        xs: "1rem",
+                        md: "1rem",
+                        lg: "2rem",
+                      },
+                      width: "25ch",
+                    }}
+                    variant="outlined"
+                    className={classes.root}
+                    size="small"
+                  >
+                    <InputLabel htmlFor="outlined-adornment-search">
+                      Search
+                    </InputLabel>
+                    <OutlinedInput
+                      id="outlined-adornment-search"
+                      type="text"
+                      // onChange={handleChange("search")}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton edge="end">
+                            <SearchIcon style={{ color: "#FFF" }} />
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                      label="search"
+                    />
+                  </FormControl>
+                </form>
+              ) : null}
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <StyledBadge
@@ -275,3 +320,64 @@ const Navbar = () => {
   );
 };
 export default Navbar;
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    backgroundColor: "#44b700",
+    color: "#44b700",
+    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+    "&::after": {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      borderRadius: "50%",
+      animation: "ripple 1.2s infinite ease-in-out",
+      border: "1px solid currentColor",
+      content: '""',
+    },
+  },
+  "@keyframes ripple": {
+    "0%": {
+      transform: "scale(.8)",
+      opacity: 1,
+    },
+    "100%": {
+      transform: "scale(2.4)",
+      opacity: 0,
+    },
+  },
+}));
+
+const useStyles = makeStyles({
+  root: {
+    "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      borderColor: "white",
+    },
+    "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#0069D9",
+    },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#0069D9",
+    },
+    "& .MuiOutlinedInput-input": {
+      color: "white",
+    },
+    "&:hover .MuiOutlinedInput-input": {
+      color: "white",
+    },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
+      color: "#fff",
+    },
+    "& .MuiInputLabel-outlined": {
+      color: "white",
+    },
+    "&:hover .MuiInputLabel-outlined": {
+      color: "white",
+    },
+    "& .MuiInputLabel-outlined.Mui-focused": {
+      color: "white",
+    },
+  },
+});
