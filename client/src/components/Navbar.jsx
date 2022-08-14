@@ -26,12 +26,11 @@ import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
 import { makeStyles } from "@mui/styles";
-import useComponentVisible from "../useComponentVisible";
+import useComponentVisible from "../customHooks/useComponentVisible";
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [searchBarShow, setSearchBarShow] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -226,7 +225,8 @@ const Navbar = () => {
                         md: "1rem",
                         lg: "2rem",
                       },
-                      width: "25ch",
+                      width: { xs: "15ch", sm: "25ch" },
+                      transition: "width 0.4s ease-in-out",
                     }}
                     variant="outlined"
                     className={classes.root}
@@ -239,6 +239,7 @@ const Navbar = () => {
                       id="outlined-adornment-search"
                       type="text"
                       // onChange={handleChange("search")}
+
                       endAdornment={
                         <InputAdornment position="end">
                           <IconButton edge="end">

@@ -10,11 +10,17 @@ const useStyles = makeStyles({
     padding: "1rem",
   },
   CardContainer: {
-    width: "60%",
+    width: "80%",
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "center",
     margin: "1rem auto",
+    ["@media (min-width:600px) and (max-width:1024px)"]: {
+      width: "95%",
+    },
+    ["@media (min-width:1200px)"]: {
+      width: "80%",
+    },
   },
   loading: {
     width: "60%",

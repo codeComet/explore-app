@@ -95,15 +95,24 @@ const PostCard = ({ id, title, description, img, name, tags, likes }) => {
 
 export default PostCard;
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   postCard: {
     width: "300px !important",
     padding: ".75rem !important",
     margin: "1rem !important",
+
     backgroundColor: "#00073a !important",
     boxShadow: "2px 5px 8px #060505cc !important",
     "& a": {
       textDecoration: "none",
+    },
+    ["@media (max-width:600px)"]: {
+      width: "260px !important",
+      margin: "1rem 0 !important",
+    },
+
+    ["@media (min-width:600px)"]: {
+      width: "280px !important",
     },
   },
   tags: {
@@ -128,4 +137,4 @@ const useStyles = makeStyles({
     color: "#606060",
     fontSize: "12px !important",
   },
-});
+}));
