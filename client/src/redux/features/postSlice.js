@@ -90,6 +90,18 @@ export const deletePost = createAsyncThunk(
   }
 );
 
+export const searchPost = createAsyncThunk(
+  "/posts/search",
+  async (searchQuery, { rejectWithValue }) => {
+    try {
+      const response = await api.searchPost(searchQuery);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const postSlice = createSlice({
   name: "post",
   initialState: {
@@ -171,6 +183,17 @@ const postSlice = createSlice({
       }
     },
     [deletePost.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+    [searchPost.pending]: (state) => {
+      state.loading = true;
+    },
+    [searchPost.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.posts = action.payload;
+    },
+    [searchPost.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload.message;
     },

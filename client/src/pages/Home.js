@@ -5,34 +5,6 @@ import { Skeleton, Box } from "@mui/material";
 import PostCard from "../components/PostCard";
 import { getPosts } from "../redux/features/postSlice";
 
-const useStyles = makeStyles({
-  cardParent: {
-    padding: "1rem",
-  },
-  CardContainer: {
-    width: "80%",
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    margin: "1rem auto",
-    ["@media (min-width:600px) and (max-width:1024px)"]: {
-      width: "95%",
-    },
-    ["@media (min-width:1200px)"]: {
-      width: "80%",
-    },
-  },
-  loading: {
-    width: "60%",
-    margin: "1rem auto",
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "80vh",
-  },
-});
-
 const Home = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -87,3 +59,36 @@ const Home = () => {
 };
 
 export default Home;
+
+const useStyles = makeStyles({
+  cardParent: {
+    padding: "1rem",
+  },
+  CardContainer: {
+    width: "80%",
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    margin: "1rem auto",
+    ["@media (min-width:600px) and (max-width:1024px)"]: {
+      width: "95%",
+    },
+    ["@media (min-width:1200px)"]: {
+      width: "80%",
+    },
+  },
+  loading: {
+    width: "80%",
+    margin: "1rem auto",
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+    ["@media (min-width:600px) and (max-width:1024px)"]: {
+      width: "95%",
+    },
+    ["@media (min-width:1200px)"]: {
+      width: "80%",
+    },
+  },
+});

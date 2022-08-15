@@ -27,10 +27,12 @@ import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
 import { makeStyles } from "@mui/styles";
 import useComponentVisible from "../customHooks/useComponentVisible";
+import { searchPost } from "../redux/features/postSlice";
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [search, setSearch] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -62,7 +64,6 @@ const Navbar = () => {
   };
 
   const handleSearchBarShow = () => {
-    // setSearchBarShow(!searchBarShow);
     setIsComponentVisible(true);
   };
 
@@ -70,6 +71,16 @@ const Navbar = () => {
     dispatch(setLogout());
     localStorage.clear();
     navigate("/login");
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (search.length > 0) {
+      dispatch(searchPost(search));
+      navigate("/posts/search?searchQuery=" + search);
+    } else {
+      navigate("/");
+    }
   };
 
   return (
@@ -215,7 +226,7 @@ const Navbar = () => {
                 </Button>
               )}
               {isComponentVisible ? (
-                <form>
+                <form onSubmit={handleSearchSubmit}>
                   <FormControl
                     sx={{
                       my: 1,
@@ -238,11 +249,11 @@ const Navbar = () => {
                     <OutlinedInput
                       id="outlined-adornment-search"
                       type="text"
-                      // onChange={handleChange("search")}
-
+                      onChange={(e) => setSearch(e.target.value)}
+                      value={search}
                       endAdornment={
                         <InputAdornment position="end">
-                          <IconButton edge="end">
+                          <IconButton edge="end" type="submit">
                             <SearchIcon style={{ color: "#FFF" }} />
                           </IconButton>
                         </InputAdornment>

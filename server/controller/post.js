@@ -101,6 +101,17 @@ export const deletePost = async (req, res) => {
     await postModel.findByIdAndDelete(id);
     res.status(200).json({ message: "Post deleted successfully" });
   } catch (error) {
-    res.status(404).json({ message: "Something went wrong" });
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+export const searchPosts = async (req, res) => {
+  const { searchQuery } = req.query;
+  try {
+    const title = new RegExp(searchQuery, "i");
+    const posts = await postModel.find({ title: title });
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong" });
   }
 };

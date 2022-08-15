@@ -27,3 +27,5 @@ export const editPost = (id, formData) =>
 export const likePost = (postId) => API.post("/posts/likePost", postId);
 export const getDashboard = (userId) => API.get(`/posts/dashboard/${userId}`); //user id
 export const deletePost = (postId) => API.delete(`/posts/deletePost/${postId}`);
+export const searchPost = (searchQuery) =>
+  API.post(`/posts/search?searchQuery=${searchQuery}`);

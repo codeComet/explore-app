@@ -7,15 +7,18 @@ import {
   dashboard,
   deletePost,
   editPost,
+  searchPosts,
 } from "../controller/post.js";
 
 const router = express.Router();
 
 router.get("/", fetchPosts);
 router.get("/:id", fetchSinglePost);
+router.post("/search", searchPosts);
+
 router.post("/addPost", auth, createPost);
 router.patch("/editPost/:id", auth, editPost);
-router.get("/dashboard/:id", dashboard);
+router.get("/dashboard/:id", auth, dashboard);
 router.delete("/deletePost/:id", auth, deletePost);
 // router.post("/likePost", likePost);
 
