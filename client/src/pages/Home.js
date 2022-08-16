@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@mui/styles";
 import { Skeleton, Box } from "@mui/material";
@@ -12,7 +12,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getPosts());
-  }, [dispatch]);
+  }, []);
 
   if (loading) {
     return (
