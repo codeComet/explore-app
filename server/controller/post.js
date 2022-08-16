@@ -115,3 +115,13 @@ export const searchPosts = async (req, res) => {
     res.status(500).json({ message: "Something went wrong" });
   }
 };
+
+export const tagPosts = async (req, res) => {
+  const { tag } = req.params;
+  try {
+    const posts = await postModel.find({ tags: { $in: tag } });
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};

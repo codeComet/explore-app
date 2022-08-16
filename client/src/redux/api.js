@@ -13,6 +13,8 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
+//AUTH ACTIONS
+
 export const login = (formData) => API.post("/user/signin", formData);
 export const signup = (formData) => API.post("/user/signup", formData);
 export const googleLogin = (result) => API.post("/user/googleLogin", result);
@@ -29,3 +31,5 @@ export const getDashboard = (userId) => API.get(`/posts/dashboard/${userId}`); /
 export const deletePost = (postId) => API.delete(`/posts/deletePost/${postId}`);
 export const searchPost = (searchQuery) =>
   API.post(`/posts/search?searchQuery=${searchQuery}`);
+
+export const tagPosts = (tag) => API.get(`/posts/tags/${tag}`);

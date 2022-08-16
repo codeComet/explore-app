@@ -10,6 +10,7 @@ import {
   Dashboard,
   PrivateRoute,
   NotFound,
+  Tags,
 } from "./pages";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
@@ -32,6 +33,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/posts/search" element={<Home />} />
+          <Route path="/posts/tags/:tag" element={<Tags />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route

@@ -38,6 +38,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state?.auth?.user);
   const classes = useStyles();
+  // for searchbar visibility toggle
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(true);
 
