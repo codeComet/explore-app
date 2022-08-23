@@ -18,7 +18,7 @@ const RelatedPosts = () => {
         sx={{
           display: "flex",
           flexWrap: "wrap",
-          alignItems: "center",
+          alignItems: "flex-start",
           justifyContent: "flex-start",
         }}
       >
