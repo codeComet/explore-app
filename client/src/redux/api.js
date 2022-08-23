@@ -33,3 +33,4 @@ export const searchPost = (searchQuery) =>
   API.post(`/posts/search?searchQuery=${searchQuery}`);
 
 export const tagPosts = (tag) => API.get(`/posts/tags/${tag}`);
+export const relatedPosts = (tags) => API.post("/posts/relatedPosts", tags);

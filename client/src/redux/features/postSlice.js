@@ -114,12 +114,25 @@ export const getTagPosts = createAsyncThunk(
   }
 );
 
+export const getRelatedPosts = createAsyncThunk(
+  "/posts/relatedPosts",
+  async (tags, { rejectWithValue }) => {
+    try {
+      const response = await api.relatedPosts(tags);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const postSlice = createSlice({
   name: "post",
   initialState: {
     singlePost: {},
     posts: [],
     tagPosts: [],
+    relatedPosts: [],
     postsFromUser: [],
     loading: false,
     error: "",
@@ -218,6 +231,17 @@ const postSlice = createSlice({
       state.tagPosts = action.payload;
     },
     [getTagPosts.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+    [getRelatedPosts.pending]: (state) => {
+      state.loading = true;
+    },
+    [getRelatedPosts.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.relatedPosts = action.payload;
+    },
+    [getRelatedPosts.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload.message;
     },

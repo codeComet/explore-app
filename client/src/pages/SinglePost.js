@@ -1,17 +1,23 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@mui/styles";
-import { Chip, Typography, Skeleton, Box } from "@mui/material";
+import { Chip, Typography, Skeleton, Box, Divider } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getSinglePost } from "../redux/features/postSlice";
+import { getSinglePost, getRelatedPosts } from "../redux/features/postSlice";
+import RelatedPosts from "../components/RelatedPosts";
 
 const SinglePost = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { id } = useParams();
   const { singlePost } = useSelector((state) => state.post);
+  const tags = singlePost?.tags;
+
+  useEffect(() => {
+    tags && dispatch(getRelatedPosts(tags));
+  }, [tags]);
 
   useEffect(() => {
     if (id) {
@@ -80,6 +86,10 @@ const SinglePost = () => {
           </div>
         </div>
       )}
+      {/* Related posts */}
+      <Typography variant="h5">Related Posts</Typography>
+      <Divider />
+      <RelatedPosts />
     </div>
   );
 };
@@ -89,6 +99,8 @@ export default SinglePost;
 const useStyles = makeStyles({
   singlePostParent: {
     padding: "1rem",
+    width: "80%",
+    margin: "auto",
   },
   singlePostContainer: {
     width: "60%",
