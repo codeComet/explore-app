@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@mui/styles";
+
 import { Chip, Typography, Skeleton, Box, Divider } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -72,65 +73,121 @@ const SinglePost = () => {
                   />
                 ))}
               </div>
-              <div className={classes.creator}>
-                <Typography variant="body2" className={classes.tagText}>
-                  by - {singlePost?.name}
-                </Typography>
-              </div>
             </div>
             <div className={classes.postDate}>
-              <Typography variant="body2" className={classes.tagText}>
-                posted on - {singlePost?.createdAt.split("T")[0]}
-              </Typography>
+              <div>
+                <Typography variant="body2" className={classes.tagText}>
+                  posted on - {singlePost?.createdAt.split("T")[0]}
+                </Typography>
+              </div>
+              <div>
+                <div className={classes.creator}>
+                  <Typography variant="body2" className={classes.tagText}>
+                    by - {singlePost?.name}
+                  </Typography>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       )}
       {/* Related posts */}
-      <Typography variant="h5">Related Posts</Typography>
-      <Divider />
-      <RelatedPosts />
+      <Box className={classes.relatedPost}>
+        <Typography variant="h5">Related Posts</Typography>
+        <Divider />
+        <RelatedPosts />
+      </Box>
     </div>
   );
 };
 
 export default SinglePost;
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   singlePostParent: {
-    padding: "1rem",
+    padding: "2rem 0",
     width: "80%",
-    margin: "auto",
+    margin: "1rem auto",
+    padding: "1rem 0",
+    ["@media (max-width:600px)"]: {
+      width: "100%",
+    },
+    ["@media (min-width:600px)"]: {
+      width: "100%",
+    },
   },
   singlePostContainer: {
-    width: "60%",
+    width: "80%",
     margin: "2rem auto",
     display: "flex",
     justifyContent: "space-around",
     alignItems: "flex-start",
     flexWrap: "wrap",
+    ["@media (max-width:600px)"]: {
+      width: "90%",
+      margin: "1rem auto",
+    },
   },
   imgContainer: {
     width: "50%",
-    textAlign: "center",
+    textAlign: "right",
     "& img": {
-      width: "80%",
+      width: "60%",
       objectFit: "contain",
       borderRadius: "5px",
       boxShadow: "10px 10px 30px rgb(0 0 0 / 70%)",
       transition: "transform .4s ease-in-out",
+      ["@media (max-width:600px)"]: {
+        width: "70%",
+      },
+      ["@media (min-width:600px) and (max-width:1024px)"]: {
+        width: "60%",
+      },
+      ["@media (min-width:1200px)"]: {
+        width: "50%",
+        marginRight: "3rem",
+      },
+    },
+    ["@media (max-width:600px)"]: {
+      width: "100%",
+      textAlign: "center",
+    },
+    ["@media (min-width:600px) and (max-width:1024px)"]: {
+      textAlign: "center",
     },
   },
   infoContainer: {
     width: "48%",
     marginLeft: "2%",
+    ["@media (max-width:600px)"]: {
+      width: "100%",
+      margin: "1rem 0",
+    },
   },
   header: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    "& h3": {
+      ["@media (max-width:600px)"]: {
+        fontSize: "20px",
+      },
+      ["@media (min-width:600px)"]: {
+        fontSize: "25px",
+      },
+      ["@media (min-width:992px)"]: {
+        fontSize: "30px",
+      },
+    },
   },
   tagsContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexWrap: "wrap",
+    margin: "1rem 0",
+  },
+  postDate: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
@@ -171,6 +228,9 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    ["@media (min-width:1200px)"]: {
+      marginRight: "6rem",
+    },
   },
   loading: {
     width: "60%",
@@ -188,4 +248,28 @@ const useStyles = makeStyles({
   skeleton2: {
     marginTop: "-100px !important",
   },
-});
+  relatedPost: {
+    "& h5": {
+      color: "#fefefe",
+      fontFamily: "Poppins, sans-serif !important",
+      ["@media (max-width:600px)"]: {
+        fontSize: "15px",
+      },
+      ["@media (min-width:600px)"]: {
+        fontSize: "20px",
+      },
+    },
+    "& p": {
+      color: "#c2c2c2",
+      fontFamily: "Poppins, sans-serif !important",
+    },
+    ["@media (max-width:600px)"]: {
+      width: "90%",
+      margin: "2rem auto 0",
+    },
+    ["@media (min-width:600px)"]: {
+      width: "90%",
+      margin: "8rem auto 0",
+    },
+  },
+}));

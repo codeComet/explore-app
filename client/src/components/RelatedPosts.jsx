@@ -9,19 +9,16 @@ const RelatedPosts = () => {
   const classes = useStyles();
 
   if (loading) {
-    return <Typography variant="h5">Loading...</Typography>;
+    return (
+      <Typography variant="body2" sx={{ margin: "1rem auto" }}>
+        Loading...
+      </Typography>
+    );
   }
 
   return (
     <Box className={classes.relatedParent}>
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          alignItems: "flex-start",
-          justifyContent: "flex-start",
-        }}
-      >
+      <Box className={classes.relatedContainer}>
         {relatedPosts.length === 0 ? (
           <Typography variant="body2">No posts to show :(</Typography>
         ) : (
@@ -51,5 +48,17 @@ const useStyles = makeStyles({
     width: "80%",
     margin: "1rem auto",
     padding: "2rem 0",
+    ["@media (min-width:600px)"]: {
+      width: "100%",
+    },
+  },
+  relatedContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+    ["@media (max-width:600px)"]: {
+      justifyContent: "center",
+    },
   },
 });
