@@ -28,16 +28,26 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { makeStyles } from "@mui/styles";
 import useComponentVisible from "../customHooks/useComponentVisible";
 import { searchPost } from "../redux/features/postSlice";
+import decode from "jwt-decode";
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [search, setSearch] = useState("");
+  const user = useSelector((state) => state?.auth?.user);
+  const token = user?.token;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state?.auth?.user);
   const classes = useStyles();
+
+  if (token) {
+    const decodedToken = decode(token);
+    if (decodedToken.exp * 1000 < new Date().getTime()) {
+      dispatch(setLogout);
+    }
+  }
+
   // for searchbar visibility toggle
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(true);

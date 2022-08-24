@@ -1,40 +1,41 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import PostCard from "./PostCard";
-import { useSelector } from "react-redux";
 import { makeStyles } from "@mui/styles";
 
-const RelatedPosts = () => {
-  const { loading, relatedPosts } = useSelector((state) => ({ ...state.post }));
+const RelatedPosts = ({ relatedPosts, postId }) => {
   const classes = useStyles();
-
-  if (loading) {
-    return (
-      <Typography variant="body2" sx={{ margin: "1rem auto" }}>
-        Loading...
-      </Typography>
-    );
-  }
 
   return (
     <Box className={classes.relatedParent}>
       <Box className={classes.relatedContainer}>
-        {relatedPosts.length === 0 ? (
-          <Typography variant="body2">No posts to show :(</Typography>
-        ) : (
-          relatedPosts.map((post, index) => (
-            <Box key={index}>
-              <PostCard
-                id={post._id}
-                title={post.title}
-                description={post.description}
-                img={post.img}
-                tags={post.tags}
-                name={post.name}
-                likes={post.likes}
-              />
+        {relatedPosts && relatedPosts.length > 0 && (
+          <>
+            {relatedPosts.length > 1 && (
+              <>
+                <Typography variant="h5">Related Posts</Typography>
+                <Divider />
+              </>
+            )}
+            <Box className={classes.relatedPosts}>
+              {relatedPosts
+                .filter((post) => post._id !== postId)
+                .splice(0, 3)
+                .map((post, index) => (
+                  <Box key={index}>
+                    <PostCard
+                      id={post._id}
+                      title={post.title}
+                      description={post.description}
+                      img={post.img}
+                      tags={post.tags}
+                      name={post.name}
+                      likes={post.likes}
+                    />
+                  </Box>
+                ))}
             </Box>
-          ))
+          </>
         )}
       </Box>
     </Box>
@@ -55,10 +56,27 @@ const useStyles = makeStyles({
   relatedContainer: {
     display: "flex",
     flexWrap: "wrap",
+    flexDirection: "column",
     alignItems: "flex-start",
     justifyContent: "flex-start",
+    "& h5": {
+      color: "#fefefe",
+      fontFamily: "Poppins, sans-serif !important",
+      marginBottom: "1rem",
+      ["@media (max-width:600px)"]: {
+        fontSize: "15px",
+      },
+      ["@media (min-width:600px)"]: {
+        fontSize: "20px",
+      },
+    },
     ["@media (max-width:600px)"]: {
       justifyContent: "center",
     },
+  },
+  relatedPosts: {
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
   },
 });

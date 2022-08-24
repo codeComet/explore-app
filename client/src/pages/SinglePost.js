@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@mui/styles";
-
 import { Chip, Typography, Skeleton, Box, Divider } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -14,6 +13,7 @@ const SinglePost = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { singlePost } = useSelector((state) => state.post);
+  const { relatedPosts } = useSelector((state) => state.post);
   const tags = singlePost?.tags;
 
   useEffect(() => {
@@ -93,9 +93,8 @@ const SinglePost = () => {
       )}
       {/* Related posts */}
       <Box className={classes.relatedPost}>
-        <Typography variant="h5">Related Posts</Typography>
         <Divider />
-        <RelatedPosts />
+        <RelatedPosts relatedPosts={relatedPosts} postId={singlePost._id} />
       </Box>
     </div>
   );
@@ -249,16 +248,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "-100px !important",
   },
   relatedPost: {
-    "& h5": {
-      color: "#fefefe",
-      fontFamily: "Poppins, sans-serif !important",
-      ["@media (max-width:600px)"]: {
-        fontSize: "15px",
-      },
-      ["@media (min-width:600px)"]: {
-        fontSize: "20px",
-      },
-    },
     "& p": {
       color: "#c2c2c2",
       fontFamily: "Poppins, sans-serif !important",
