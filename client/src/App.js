@@ -54,7 +54,7 @@ function App() {
           />
           <Route path="/posts/:id" element={<SinglePost />} />
           <Route
-            path="/dashboard/:id"
+            path="/dashboard"
             element={
               <PrivateRoute>
                 <Dashboard />

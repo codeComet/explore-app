@@ -21,7 +21,7 @@ export const googleLogin = (result) => API.post("/user/googleLogin", result);
 
 // POST ACTIONS
 
-export const fetchPosts = () => API.get("/posts");
+export const fetchPosts = (page) => API.get(`/posts?page=${page}`);
 export const fetchSinglePost = (id) => API.get(`/posts/${id}`);
 export const createPost = (formData) => API.post("/posts/addPost", formData);
 export const editPost = (id, formData) =>

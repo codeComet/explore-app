@@ -1,18 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@mui/styles";
 import { Skeleton, Box } from "@mui/material";
 import PostCard from "../components/PostCard";
-import { getPosts } from "../redux/features/postSlice";
+import BottomPagination from "../components/BottomPagination";
+import { getPosts, setCurrentPage } from "../redux/features/postSlice";
 
 const Home = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { loading, posts } = useSelector((state) => ({ ...state.post }));
+  const { loading, posts, totalPage, currentPage } = useSelector((state) => ({
+    ...state.post,
+  }));
 
   useEffect(() => {
-    dispatch(getPosts());
-  }, []);
+    dispatch(getPosts(currentPage));
+  }, [currentPage]);
 
   if (loading) {
     return (
@@ -54,6 +57,15 @@ const Home = () => {
           ))
         )}
       </div>
+
+      <div className={classes.paginationContainer}>
+        <BottomPagination
+          setCurrentPage={setCurrentPage}
+          totalPage={totalPage}
+          currentPage={currentPage}
+          dispatch={dispatch}
+        />
+      </div>
     </div>
   );
 };
@@ -90,5 +102,11 @@ const useStyles = makeStyles({
     ["@media (min-width:1200px)"]: {
       width: "80%",
     },
+  },
+  paginationContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: "2rem 0",
   },
 });

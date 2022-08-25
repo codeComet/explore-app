@@ -50,7 +50,9 @@ const useStyles = makeStyles({
 
 const AddEditPost = () => {
   const classes = useStyles();
-  const { loading, error } = useSelector((state) => ({ ...state.post }));
+  const { loading, error, singlePost } = useSelector((state) => ({
+    ...state.post,
+  }));
   const { user } = useSelector((state) => ({ ...state.auth }));
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -61,8 +63,6 @@ const AddEditPost = () => {
     img: "",
     tags: [],
   });
-
-  const { singlePost } = useSelector((state) => state.post);
 
   useEffect(() => {
     if (id) {
@@ -91,7 +91,7 @@ const AddEditPost = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedPostData = { ...postData, name: user?.result?.name };
-    if (singlePost) {
+    if (id) {
       dispatch(editPost({ id, updatedPostData, navigate, toast }));
     } else {
       dispatch(createPost({ updatedPostData, navigate, toast }));
@@ -116,7 +116,7 @@ const AddEditPost = () => {
     <div className="form-parent">
       <div className="form-container">
         <h1 style={{ textAlign: "center", color: "#fff" }}>
-          {singlePost ? "Edit Post" : "Add Post"}
+          {id ? "Edit Post" : "Add Post"}
         </h1>
         <form onSubmit={handleSubmit}>
           {loading ? (

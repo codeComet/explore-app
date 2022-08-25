@@ -78,5 +78,8 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "flex-start",
     justifyContent: "flex-start",
+    ["@media (max-width:600px)"]: {
+      justifyContent: "center",
+    },
   },
 });

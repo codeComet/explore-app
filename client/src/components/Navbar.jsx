@@ -50,12 +50,12 @@ const Navbar = () => {
 
   // for searchbar visibility toggle
   const { ref, isComponentVisible, setIsComponentVisible } =
-    useComponentVisible(true);
+    useComponentVisible(false);
 
   const pages = [
     { name: "Home", link: "/" },
     { name: "Add post", link: "/addPost" },
-    { name: "Dashboard", link: `/dashboard/${user?.result?._id}` },
+    { name: "Dashboard", link: "/dashboard" },
     { name: "Blogs", link: "/blogs" },
   ];
 
@@ -140,17 +140,17 @@ const Navbar = () => {
                 anchorEl={anchorElNav}
                 anchorOrigin={{
                   vertical: "bottom",
-                  horizontal: "left",
+                  horizontal: "right",
                 }}
                 keepMounted
                 transformOrigin={{
                   vertical: "top",
-                  horizontal: "left",
+                  horizontal: "right",
                 }}
                 open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
                 sx={{
-                  display: { xs: "block", md: "none" },
+                  display: { xs: "block" },
                 }}
               >
                 {pages.map((page) => (
