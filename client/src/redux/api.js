@@ -29,3 +29,5 @@ export const getDashboard = (userId) => API.get(`/posts/dashboard/${userId}`); /
 export const deletePost = (postId) => API.delete(`/posts/deletePost/${postId}`);
 export const searchPost = (searchQuery) =>
   API.post(`/posts/search?searchQuery=${searchQuery}`);
+
+// like functionality

@@ -78,6 +78,7 @@ const Navbar = () => {
     if (search.length > 0) {
       dispatch(searchPost(search));
       navigate("/posts/search?searchQuery=" + search);
+      setSearch("");
     } else {
       navigate("/");
     }
