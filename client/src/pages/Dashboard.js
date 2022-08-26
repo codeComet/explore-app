@@ -22,13 +22,16 @@ const Dashboard = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user?.result?._id;
   const { postsFromUser, loading } = useSelector((state) => ({
     ...state.post,
   }));
 
   useEffect(() => {
-    dispatch(getSingleUserPosts(user?.result?._id));
-  }, []);
+    if (userId) {
+      dispatch(getSingleUserPosts(userId));
+    }
+  }, [userId]);
 
   const handleDelete = (postId) => {
     if (window.confirm("Are you sure you want to delete this post?")) {
@@ -66,9 +69,7 @@ const Dashboard = () => {
     <div className={classes.dashboardParent}>
       <h1>Dashboard</h1>
       <div className={classes.dashboardContainer}>
-        {loading === false && postsFromUser.length == 0 ? (
-          <h1>No posts yet</h1>
-        ) : postsFromUser.length !== 0 ? (
+        {postsFromUser &&
           postsFromUser.map((post) => (
             <div key={post._id} className={classes.singlePost}>
               <Card
@@ -132,8 +133,7 @@ const Dashboard = () => {
                 </Box>
               </Card>
             </div>
-          ))
-        ) : null}
+          ))}
       </div>
     </div>
   );

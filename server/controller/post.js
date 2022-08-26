@@ -34,9 +34,21 @@ export const editPost = async (req, res) => {
 };
 
 export const fetchPosts = async (req, res) => {
+  const { page } = req.query;
   try {
-    const posts = await postModel.find();
-    res.status(201).json(posts);
+    // const posts = await postModel.find();
+    const postLimit = 3;
+    const startIndex = (Number(page) - 1) * postLimit;
+    const totalPost = await postModel.countDocuments({});
+    const totalPage = Math.ceil(totalPost / postLimit);
+    const posts = await postModel.find().limit(postLimit).skip(startIndex);
+
+    res.status(201).json({
+      data: posts,
+      totalPage,
+      currentPage: Number(page),
+      totalPost,
+    });
   } catch (error) {
     res.status(404).json({ message: "Something went wrong" });
   }
@@ -113,5 +125,26 @@ export const searchPosts = async (req, res) => {
     res.status(200).json(posts);
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+export const tagPosts = async (req, res) => {
+  const { tag } = req.params;
+  try {
+    const posts = await postModel.find({ tags: { $in: tag } });
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+export const relatedPosts = async (req, res) => {
+  const tags = req.body;
+  try {
+    const posts = await postModel.find({ tags: { $in: tags } });
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong" });
+    console.log(error);
   }
 };

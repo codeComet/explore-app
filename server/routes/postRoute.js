@@ -8,6 +8,8 @@ import {
   deletePost,
   editPost,
   searchPosts,
+  tagPosts,
+  relatedPosts,
 } from "../controller/post.js";
 
 const router = express.Router();
@@ -15,6 +17,8 @@ const router = express.Router();
 router.get("/", fetchPosts);
 router.get("/:id", fetchSinglePost);
 router.post("/search", searchPosts);
+router.get("/tags/:tag", tagPosts);
+router.post("/relatedPosts", relatedPosts);
 
 router.post("/addPost", auth, createPost);
 router.patch("/editPost/:id", auth, editPost);

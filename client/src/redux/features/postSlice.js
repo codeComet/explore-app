@@ -31,9 +31,9 @@ export const editPost = createAsyncThunk(
 
 export const getPosts = createAsyncThunk(
   "/posts",
-  async (_, { rejectWithValue }) => {
+  async (page, { rejectWithValue }) => {
     try {
-      const response = await api.fetchPosts();
+      const response = await api.fetchPosts(page);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -102,14 +102,47 @@ export const searchPost = createAsyncThunk(
   }
 );
 
+export const getTagPosts = createAsyncThunk(
+  "/posts/tags/:tag",
+  async (tag, { rejectWithValue }) => {
+    try {
+      const response = await api.tagPosts(tag);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const getRelatedPosts = createAsyncThunk(
+  "/posts/relatedPosts",
+  async (tags, { rejectWithValue }) => {
+    try {
+      const response = await api.relatedPosts(tags);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const postSlice = createSlice({
   name: "post",
   initialState: {
     singlePost: {},
     posts: [],
+    tagPosts: [],
+    relatedPosts: [],
     postsFromUser: [],
+    currentPage: 1,
+    totalPage: null,
     loading: false,
     error: "",
+  },
+  reducers: {
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload;
+    },
   },
   extraReducers: {
     [createPost.pending]: (state) => {
@@ -139,7 +172,9 @@ const postSlice = createSlice({
     },
     [getPosts.fulfilled]: (state, action) => {
       state.loading = false;
-      state.posts = action.payload;
+      state.posts = action.payload.data;
+      state.totalPage = action.payload.totalPage;
+      state.currentPage = action.payload.currentPage;
     },
     [getPosts.rejected]: (state, action) => {
       state.loading = false;
@@ -197,6 +232,28 @@ const postSlice = createSlice({
       state.loading = false;
       state.error = action.payload.message;
     },
+    [getTagPosts.pending]: (state) => {
+      state.loading = true;
+    },
+    [getTagPosts.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.tagPosts = action.payload;
+    },
+    [getTagPosts.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+    [getRelatedPosts.pending]: (state) => {
+      state.loading = true;
+    },
+    [getRelatedPosts.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.relatedPosts = action.payload;
+    },
+    [getRelatedPosts.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
     // [likePost.pending]: (state) => {
     //   state.loading = true;
     // },
@@ -209,5 +266,7 @@ const postSlice = createSlice({
     // },
   },
 });
+
+export const { setCurrentPage } = postSlice.actions;
 
 export default postSlice.reducer;

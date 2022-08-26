@@ -28,23 +28,34 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { makeStyles } from "@mui/styles";
 import useComponentVisible from "../customHooks/useComponentVisible";
 import { searchPost } from "../redux/features/postSlice";
+import decode from "jwt-decode";
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [search, setSearch] = useState("");
+  const user = useSelector((state) => state?.auth?.user);
+  const token = user?.token;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state?.auth?.user);
   const classes = useStyles();
+
+  if (token) {
+    const decodedToken = decode(token);
+    if (decodedToken.exp * 1000 < new Date().getTime()) {
+      dispatch(setLogout);
+    }
+  }
+
+  // for searchbar visibility toggle
   const { ref, isComponentVisible, setIsComponentVisible } =
-    useComponentVisible(true);
+    useComponentVisible(false);
 
   const pages = [
     { name: "Home", link: "/" },
     { name: "Add post", link: "/addPost" },
-    { name: "Dashboard", link: `/dashboard/${user?.result?._id}` },
+    { name: "Dashboard", link: "/dashboard" },
     { name: "Blogs", link: "/blogs" },
   ];
 
@@ -130,17 +141,17 @@ const Navbar = () => {
                 anchorEl={anchorElNav}
                 anchorOrigin={{
                   vertical: "bottom",
-                  horizontal: "left",
+                  horizontal: "right",
                 }}
                 keepMounted
                 transformOrigin={{
                   vertical: "top",
-                  horizontal: "left",
+                  horizontal: "right",
                 }}
                 open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
                 sx={{
-                  display: { xs: "block", md: "none" },
+                  display: { xs: "block" },
                 }}
               >
                 {pages.map((page) => (

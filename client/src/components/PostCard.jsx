@@ -64,13 +64,14 @@ const PostCard = ({ id, title, description, img, name, tags, likes }) => {
         </CardContent>
         <div className={classes.tags}>
           {tags.map((tag, index) => (
-            <Chip
-              key={index}
-              label={tag}
-              color="success"
-              variant="outlined"
-              className={classes.tag}
-            />
+            <Link to={`/posts/tags/${tag}`} key={index}>
+              <Chip
+                label={tag}
+                color="success"
+                variant="outlined"
+                className={classes.tag}
+              />
+            </Link>
           ))}
         </div>
         <CardActions style={{ marginTop: ".5rem" }}>
@@ -95,7 +96,7 @@ const PostCard = ({ id, title, description, img, name, tags, likes }) => {
 
 export default PostCard;
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   postCard: {
     width: "300px !important",
     padding: ".75rem !important",
@@ -105,6 +106,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "2px 5px 8px #060505cc !important",
     "& a": {
       textDecoration: "none",
+      cursor: "pointer",
     },
     ["@media (max-width:600px)"]: {
       width: "260px !important",
@@ -120,6 +122,11 @@ const useStyles = makeStyles((theme) => ({
   },
   tag: {
     margin: ".2rem",
+    "&:hover": {
+      backgroundColor: "red",
+      color: "#fff",
+      cursor: "pointer",
+    },
   },
   title: {
     color: "#fff",
@@ -137,4 +144,4 @@ const useStyles = makeStyles((theme) => ({
     color: "#606060",
     fontSize: "12px !important",
   },
-}));
+});

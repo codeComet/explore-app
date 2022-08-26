@@ -13,13 +13,15 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
+//AUTH ACTIONS
+
 export const login = (formData) => API.post("/user/signin", formData);
 export const signup = (formData) => API.post("/user/signup", formData);
 export const googleLogin = (result) => API.post("/user/googleLogin", result);
 
 // POST ACTIONS
 
-export const fetchPosts = () => API.get("/posts");
+export const fetchPosts = (page) => API.get(`/posts?page=${page}`);
 export const fetchSinglePost = (id) => API.get(`/posts/${id}`);
 export const createPost = (formData) => API.post("/posts/addPost", formData);
 export const editPost = (id, formData) =>
@@ -30,4 +32,5 @@ export const deletePost = (postId) => API.delete(`/posts/deletePost/${postId}`);
 export const searchPost = (searchQuery) =>
   API.post(`/posts/search?searchQuery=${searchQuery}`);
 
-// like functionality
+export const tagPosts = (tag) => API.get(`/posts/tags/${tag}`);
+export const relatedPosts = (tags) => API.post("/posts/relatedPosts", tags);
