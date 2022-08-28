@@ -26,7 +26,7 @@ export const fetchSinglePost = (id) => API.get(`/posts/${id}`);
 export const createPost = (formData) => API.post("/posts/addPost", formData);
 export const editPost = (id, formData) =>
   API.patch(`/posts/editPost/${id}`, formData);
-export const likePost = (postId) => API.post("/posts/likePost", postId);
+export const likePost = (id) => API.patch(`/posts/likePost/${id}`);
 export const getDashboard = (userId) => API.get(`/posts/dashboard/${userId}`); //user id
 export const deletePost = (postId) => API.delete(`/posts/deletePost/${postId}`);
 export const searchPost = (searchQuery) =>

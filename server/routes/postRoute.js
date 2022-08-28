@@ -10,6 +10,7 @@ import {
   searchPosts,
   tagPosts,
   relatedPosts,
+  likePost,
 } from "../controller/post.js";
 
 const router = express.Router();
@@ -24,6 +25,6 @@ router.post("/addPost", auth, createPost);
 router.patch("/editPost/:id", auth, editPost);
 router.get("/dashboard/:id", auth, dashboard);
 router.delete("/deletePost/:id", auth, deletePost);
-// router.post("/likePost", likePost);
+router.patch("/likePost/:id", auth, likePost);
 
 export default router;

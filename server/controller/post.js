@@ -79,30 +79,39 @@ export const dashboard = async (req, res) => {
   }
 };
 
-// export const likePost = async (req, res) => {
-//   const { postId } = req.body;
-//   try {
-//     const selectedPost = await postModel.findById(postId);
+//like post controller.
 
-//     const userIndex = selectedPost.likes.findIndex(
-//       (id) => id === String(req.userId)
-//     );
-//     if (userIndex === -1) {
-//       selectedPost.likes.push(userId);
-//     } else {
-//       selectedPost.likes.splice(userIndex, 1);
-//     }
+export const likePost = async (req, res) => {
+  const { id } = req.params;
+  if (!req.userId) {
+    res.status(401).json({ message: "User is not logged in" });
+  }
 
-//     const updatedPost = await selectedPost.finidByIdAndUpdate(
-//       postId,
-//       selectedPost,
-//       { new: true }
-//     );
-//     res.status(200).json(updatedPost);
-//   } catch (error) {
-//     res.status(404).json({ message: "Something went wrong" });
-//   }
-// };
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ message: "Post doesn't exist" });
+  }
+
+  try {
+    const selectedPost = await postModel.findById(id);
+
+    const userIndex = selectedPost.likes.findIndex(
+      (id) => id === String(req.userId)
+    );
+    if (userIndex === -1) {
+      selectedPost.likes.push(req.userId);
+    } else {
+      selectedPost.likes.splice(userIndex, 1);
+    }
+
+    const updatedPost = await postModel.findByIdAndUpdate(id, selectedPost, {
+      new: true,
+    });
+    res.status(200).json(updatedPost);
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ message: "Something went wrong" });
+  }
+};
 
 export const deletePost = async (req, res) => {
   const { id } = req.params;

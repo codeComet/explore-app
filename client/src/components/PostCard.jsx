@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import {
   Card,
   CardMedia,
@@ -17,17 +17,20 @@ import { likePost } from "../redux/features/postSlice";
 
 const PostCard = ({ id, title, description, img, name, tags, likes }) => {
   const classes = useStyles();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const post = useSelector((state) =>
     state.post.posts.find((post) => post._id === id)
   );
-  const [liked, setLiked] = useState(false);
+  const { user } = useSelector((state) => ({ ...state.auth }));
+  const userId = user?.result?._id || user?.result?.googleId;
+  // const [liked, setLiked] = useState(false);
+
+  const userHasLiked = (userId) => {
+    return likes.includes(userId);
+  };
 
   const handleLike = () => {
-    // dispatch(likePost(id));
-    console.log(post);
-    setLiked(!liked);
-    // console.log(id);
+    dispatch(likePost(id));
   };
 
   const excerpt = (str) => {
@@ -76,7 +79,7 @@ const PostCard = ({ id, title, description, img, name, tags, likes }) => {
         </div>
         <CardActions style={{ marginTop: ".5rem" }}>
           <Button size="small" onClick={handleLike}>
-            {liked ? (
+            {userHasLiked(userId) ? (
               <FavoriteIcon style={{ color: "red" }} />
             ) : (
               <FavoriteBorderIcon />
