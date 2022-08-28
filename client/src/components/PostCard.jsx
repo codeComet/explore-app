@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardMedia,
@@ -30,7 +30,7 @@ const PostCard = ({ id, title, description, img, name, tags, likes }) => {
   };
 
   const handleLike = () => {
-    dispatch(likePost(id));
+    dispatch(likePost(post._id));
   };
 
   const excerpt = (str) => {
