@@ -21,13 +21,10 @@ app.get("/", (req, res) => {
 });
 
 mongoose
-  .connect(
-    "mongodb+srv://bishal:Bishal10@cluster0.aeufx.mongodb.net/?retryWrites=true",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(process.env.CONNECTION_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() =>
     app.listen(port, () => console.log(`Server running on port ${port}`))
   )
