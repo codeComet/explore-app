@@ -7,6 +7,7 @@ import {
   Typography,
   Button,
   Chip,
+  Tooltip,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -75,14 +76,30 @@ const PostCard = ({ id, title, description, img, name, tags, likes }) => {
           ))}
         </div>
         <CardActions style={{ marginTop: ".5rem" }}>
-          <Button size="small" onClick={handleLike}>
-            {userHasLiked(userId) ? (
-              <FavoriteIcon style={{ color: "red" }} />
-            ) : (
-              <FavoriteBorderIcon />
-            )}
-            <span className={classes.likeCount}>{likes.length}</span>
-          </Button>
+          <Tooltip
+            title={
+              !userId
+                ? "Login/Signup to like"
+                : likes.length === 1 && userHasLiked(userId)
+                ? "You Like this post"
+                : userHasLiked(userId)
+                ? `You and ${likes.length - 1} user likes this post`
+                : "Like post"
+            }
+          >
+            <Button
+              size="small"
+              onClick={!userId ? null : handleLike}
+              color="primary"
+            >
+              {userHasLiked(userId) ? (
+                <FavoriteIcon style={{ color: "red" }} />
+              ) : (
+                <FavoriteBorderIcon />
+              )}
+              <span className={classes.likeCount}>{likes.length}</span>
+            </Button>
+          </Tooltip>
           <Link to={`/posts/${id}`}>
             <Button size="small" style={{ textTransform: "none" }}>
               Details
