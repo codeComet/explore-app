@@ -56,7 +56,6 @@ const Navbar = () => {
     { name: "Home", link: "/" },
     { name: "Add post", link: "/addPost" },
     { name: "Dashboard", link: "/dashboard" },
-    { name: "Blogs", link: "/blogs" },
   ];
 
   const handleOpenNavMenu = (event) => {
@@ -306,9 +305,6 @@ const Navbar = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">Account</Typography>
-                </MenuItem>
                 <MenuItem onClick={handleLogout}>
                   <Typography textAlign="center">Logout</Typography>
                 </MenuItem>

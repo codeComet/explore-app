@@ -20,7 +20,7 @@ const Home = () => {
   if (loading) {
     return (
       <div className={classes.loading}>
-        {new Array(6).fill(0).map((_, i) => (
+        {new Array(8).fill(0).map((_, i) => (
           <Box sx={{ width: 300, marginRight: 2, my: 5 }} key={i}>
             <Skeleton variant="rectangular" width={300} height={220} />
             <Box sx={{ pt: 0.5 }}>
@@ -59,12 +59,14 @@ const Home = () => {
       </div>
 
       <div className={classes.paginationContainer}>
-        <BottomPagination
-          setCurrentPage={setCurrentPage}
-          totalPage={totalPage}
-          currentPage={currentPage}
-          dispatch={dispatch}
-        />
+        {posts.length > 0 && (
+          <BottomPagination
+            setCurrentPage={setCurrentPage}
+            totalPage={totalPage}
+            currentPage={currentPage}
+            dispatch={dispatch}
+          />
+        )}
       </div>
     </div>
   );

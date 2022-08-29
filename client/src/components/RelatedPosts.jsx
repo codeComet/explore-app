@@ -49,6 +49,9 @@ const useStyles = makeStyles({
     width: "80%",
     margin: "1rem auto",
     padding: "2rem 0",
+    ["@media (max-width:600px)"]: {
+      width: "100%",
+    },
     ["@media (min-width:600px)"]: {
       width: "100%",
     },

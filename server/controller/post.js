@@ -37,7 +37,7 @@ export const fetchPosts = async (req, res) => {
   const { page } = req.query;
   try {
     // const posts = await postModel.find();
-    const postLimit = 6;
+    const postLimit = 8;
     const startIndex = (Number(page) - 1) * postLimit;
     const totalPost = await postModel.countDocuments({});
     const totalPage = Math.ceil(totalPost / postLimit);
