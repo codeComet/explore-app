@@ -8,3 +8,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.publisher-anchor-color a {
+  color: #00073a !important;
+}

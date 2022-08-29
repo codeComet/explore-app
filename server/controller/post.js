@@ -41,7 +41,11 @@ export const fetchPosts = async (req, res) => {
     const startIndex = (Number(page) - 1) * postLimit;
     const totalPost = await postModel.countDocuments({});
     const totalPage = Math.ceil(totalPost / postLimit);
-    const posts = await postModel.find().limit(postLimit).skip(startIndex);
+    const posts = await postModel
+      .find()
+      .limit(postLimit)
+      .skip(startIndex)
+      .sort({ id: -1 });
 
     res.status(201).json({
       data: posts,
@@ -50,7 +54,7 @@ export const fetchPosts = async (req, res) => {
       totalPost,
     });
   } catch (error) {
-    res.status(404).json({ message: "Something went wrong" });
+    res.status(500).json({ message: "Something went wrong" });
   }
 };
 
@@ -60,7 +64,7 @@ export const fetchSinglePost = async (req, res) => {
     const postData = await postModel.findById(id);
     res.status(201).json(postData);
   } catch (error) {
-    res.status(404).json({ message: "Something went wrong" });
+    res.status(500).json({ message: "Something went wrong" });
   }
 };
 

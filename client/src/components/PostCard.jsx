@@ -79,7 +79,7 @@ const PostCard = ({ id, title, description, img, name, tags, likes }) => {
           <Tooltip
             title={
               !userId
-                ? "Login/Signup to like"
+                ? "Login to like this post"
                 : likes.length === 1 && userHasLiked(userId)
                 ? "You Like this post"
                 : userHasLiked(userId)

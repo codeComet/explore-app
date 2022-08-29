@@ -1,20 +1,35 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@mui/styles";
-import { Chip, Typography, Skeleton, Box, Divider } from "@mui/material";
+import {
+  Chip,
+  Typography,
+  Skeleton,
+  Box,
+  Divider,
+  Tooltip,
+} from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getSinglePost, getRelatedPosts } from "../redux/features/postSlice";
 import RelatedPosts from "../components/RelatedPosts";
+import { DiscussionEmbed } from "disqus-react";
 
 const SinglePost = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { id } = useParams();
   const { singlePost } = useSelector((state) => state.post);
+  const { user } = useSelector((state) => ({ ...state.auth }));
   const { relatedPosts } = useSelector((state) => state.post);
   const tags = singlePost?.tags;
+
+  const userId = user?.result?._id;
+
+  const userHasLiked = (userId) => {
+    return singlePost.likes.includes(userId);
+  };
 
   useEffect(() => {
     tags && dispatch(getRelatedPosts(tags));
@@ -51,7 +66,13 @@ const SinglePost = () => {
                 {singlePost?.title}
               </Typography>
               <div className={classes.heart}>
-                <FavoriteBorderIcon style={{ color: "#fff" }} />
+                {userHasLiked(userId) ? (
+                  <Tooltip title="you liked this post">
+                    <FavoriteIcon style={{ color: "red" }} />
+                  </Tooltip>
+                ) : (
+                  <FavoriteBorderIcon />
+                )}
               </div>
             </div>
             <Typography variant="body2" className={classes.description}>
@@ -95,6 +116,16 @@ const SinglePost = () => {
       <Box className={classes.relatedPost}>
         <Divider />
         <RelatedPosts relatedPosts={relatedPosts} postId={singlePost._id} />
+      </Box>
+      {/* Comments sections */}
+      <Box className={classes.comments}>
+        <DiscussionEmbed
+          shortname="exploreapp"
+          config={{
+            identifier: singlePost._id,
+            title: singlePost.title,
+          }}
+        />
       </Box>
     </div>
   );
@@ -260,5 +291,10 @@ const useStyles = makeStyles((theme) => ({
       width: "90%",
       margin: "8rem auto 0",
     },
+  },
+
+  comments: {
+    width: "85%",
+    margin: "0 auto",
   },
 }));
