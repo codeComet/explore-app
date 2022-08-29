@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import {
   Card,
   CardMedia,
@@ -18,9 +18,6 @@ import { likePost } from "../redux/features/postSlice";
 const PostCard = ({ id, title, description, img, name, tags, likes }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const post = useSelector((state) =>
-    state.post.posts.find((post) => post._id === id)
-  );
   const { user } = useSelector((state) => ({ ...state.auth }));
   const userId = user?.result?._id || user?.result?.googleId;
   // const [liked, setLiked] = useState(false);
@@ -30,7 +27,7 @@ const PostCard = ({ id, title, description, img, name, tags, likes }) => {
   };
 
   const handleLike = () => {
-    dispatch(likePost(post._id));
+    dispatch(likePost({ id }));
   };
 
   const excerpt = (str) => {

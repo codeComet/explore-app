@@ -55,7 +55,7 @@ export const getSinglePost = createAsyncThunk(
 
 export const likePost = createAsyncThunk(
   "/posts/likePost",
-  async (id, { rejectWithValue }) => {
+  async ({ id }, { rejectWithValue }) => {
     try {
       const response = await api.likePost(id);
       return response.data;
@@ -223,13 +223,12 @@ const postSlice = createSlice({
     },
     [likePost.pending]: (state) => {},
     [likePost.fulfilled]: (state, action) => {
-      state.loading = false;
       const {
         arg: { id },
       } = action.meta;
       if (id) {
         state.posts = state.posts.map((post) =>
-          post.id === id ? action.payload : post
+          post._id === id ? action.payload : post
         );
       }
     },
