@@ -39,8 +39,8 @@ const PostCard = ({ id, title, description, img, name, tags, likes }) => {
   };
 
   return (
-    <div>
-      <Card className={classes.postCard}>
+    <div className={classes.cardParent}>
+      <Card>
         <CardMedia component="img" alt={title} height="200" image={img} />
         <CardContent>
           <Typography
@@ -114,25 +114,30 @@ const PostCard = ({ id, title, description, img, name, tags, likes }) => {
 export default PostCard;
 
 const useStyles = makeStyles({
-  postCard: {
-    width: "300px !important",
-    padding: ".75rem !important",
-    margin: "1rem !important",
+  cardParent: {
+    "& .MuiCard-root": {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      height: "100%",
+      width: "300px",
+      padding: ".75rem",
+      margin: "1rem",
+      backgroundColor: "#00073a",
+      boxShadow: "2px 5px 8px #060505cc",
+      "& a": {
+        textDecoration: "none",
+        cursor: "pointer",
+      },
+      ["@media (max-width:600px)"]: {
+        width: "260px",
+        margin: "1rem 0",
+      },
 
-    backgroundColor: "#00073a !important",
-    boxShadow: "2px 5px 8px #060505cc !important",
-    "& a": {
-      textDecoration: "none",
-      cursor: "pointer",
-    },
-    ["@media (max-width:600px)"]: {
-      width: "260px !important",
-      margin: "1rem 0 !important",
-    },
-
-    ["@media (min-width:600px)"]: {
-      width: "280px !important",
-    },
+      ["@media (min-width:600px)"]: {
+        width: "280px",
+      },
+    }
   },
   tags: {
     paddingLeft: "10px",
@@ -147,6 +152,8 @@ const useStyles = makeStyles({
   },
   title: {
     color: "#fff",
+    fontSize: "1.1rem !important",
+    fontFamily: "Poppins, sans-serif !important",
   },
   description: {
     color: "#bbb",
