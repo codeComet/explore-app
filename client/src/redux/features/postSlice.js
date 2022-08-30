@@ -78,10 +78,10 @@ export const getSingleUserPosts = createAsyncThunk(
 );
 
 export const deletePost = createAsyncThunk(
-  "/posts/deletePost/:id",
-  async ({ postId, toast }, { rejectWithValue }) => {
+  "/posts/deletePost",
+  async ({ id, toast }, { rejectWithValue }) => {
     try {
-      const response = await api.deletePost(postId);
+      const response = await api.deletePost(id);
       toast.success("Post deleted successfully!");
       return response.data;
     } catch (error) {
@@ -212,9 +212,9 @@ const postSlice = createSlice({
       } = action.meta;
       if (id) {
         state.postsFromUser = state.postsFromUser.filter(
-          (post) => post.id !== id
+          (post) => post._id !== id
         );
-        state.posts = state.posts.filter((post) => post.id !== id);
+        state.posts = state.posts.filter((post) => post._id !== id);
       }
     },
     [deletePost.rejected]: (state, action) => {

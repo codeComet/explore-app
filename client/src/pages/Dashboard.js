@@ -21,6 +21,7 @@ import { toast } from "react-toastify";
 const Dashboard = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?.result?._id;
   const { postsFromUser, loading } = useSelector((state) => ({
@@ -33,10 +34,9 @@ const Dashboard = () => {
     }
   }, [userId]);
 
-  const handleDelete = (postId) => {
+  const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this post?")) {
-      dispatch(deletePost({ postId, toast }));
-      window.location.reload();
+      dispatch(deletePost({ id, toast }));
     }
   };
 

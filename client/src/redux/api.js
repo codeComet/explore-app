@@ -2,6 +2,7 @@ import axios from "axios";
 
 const API = axios.create({
   baseURL: "https://my-explore-app.herokuapp.com/",
+  // baseURL: "http://localhost:5000",
 });
 
 API.interceptors.request.use((req) => {
@@ -28,7 +29,7 @@ export const editPost = (id, formData) =>
   API.patch(`/posts/editPost/${id}`, formData);
 export const likePost = (id) => API.patch(`/posts/likePost/${id}`);
 export const getDashboard = (userId) => API.get(`/posts/dashboard/${userId}`); //user id
-export const deletePost = (postId) => API.delete(`/posts/deletePost/${postId}`);
+export const deletePost = (id) => API.delete(`/posts/deletePost/${id}`);
 export const searchPost = (searchQuery) =>
   API.post(`/posts/search?searchQuery=${searchQuery}`);
 

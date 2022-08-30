@@ -233,7 +233,7 @@ const AddEditPost = () => {
                 fullWidth
                 disabled
               >
-                {singlePost ? "Saving Changes" : "Adding Post"}
+                {id ? "Saving Changes" : "Adding Post"}
               </Button>
             ) : (
               <Button
@@ -242,7 +242,7 @@ const AddEditPost = () => {
                 type="submit"
                 fullWidth
               >
-                {singlePost ? "Save Changes" : "Add Post"}
+                {id ? "Save Changes" : "Add Post"}
               </Button>
             )}
           </div>
