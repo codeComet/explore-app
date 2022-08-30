@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deepOrange } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
 import { setLogout } from "../redux/features/authSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
 import { makeStyles } from "@mui/styles";
@@ -103,8 +103,8 @@ const Navbar = () => {
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="/"
+            component={Link}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -157,8 +157,8 @@ const Navbar = () => {
                   <MenuItem key={page.name} onClick={handleCloseNavMenu}>
                     <Typography
                       textAlign="center"
-                      component="a"
-                      href={page.link}
+                      component={Link}
+                      to={page.link}
                     >
                       {page.name}
                     </Typography>
@@ -212,8 +212,8 @@ const Navbar = () => {
                   key={page.name}
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: "white", display: "block" }}
-                  component="a"
-                  href={page.link}
+                  component={Link}
+                  to={page.link}
                 >
                   {page.name}
                 </Button>
@@ -317,8 +317,8 @@ const Navbar = () => {
                 color="success"
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, mx: 2, color: "white", display: "inline-block" }}
-                component="a"
-                href="/login"
+                component={Link}
+                to="/login"
               >
                 Login
               </Button>
@@ -327,8 +327,8 @@ const Navbar = () => {
                 color="warning"
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "inline-block" }}
-                component="a"
-                href="/register"
+                component={Link}
+                to="/register"
               >
                 Sign up
               </Button>
