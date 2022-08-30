@@ -1,8 +1,10 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://my-explore-app.herokuapp.com/",
-  // baseURL: "http://localhost:5000",
+  baseURL: "https://my-explore-app.herokuapp.com/", 
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+  },
 });
 
 API.interceptors.request.use((req) => {
