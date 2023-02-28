@@ -16,7 +16,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { googleLogin, login } from "../redux/features/authSlice";
 import GoogleIcon from "@mui/icons-material/Google";
-import { GoogleLogin } from "react-google-login";
+import jwt_decode from "jwt-decode";
+import { GoogleLogin } from "@react-oauth/google";
+
+import { useGoogleLogin } from "@react-oauth/google";
 
 const useStyles = makeStyles({
   container: {
@@ -64,18 +67,26 @@ export default function Login() {
     error && toast.error(error);
   }, [error]);
 
+  const login = useGoogleLogin({
+    onSuccess: (CredentialResponse) => console.log(CredentialResponse),
+    flow: "auth-code",
+  });
+
   const googleSuccess = (resp) => {
-    const email = resp?.profileObj?.email;
-    const name = resp?.profileObj?.name;
+    let decoded = jwt_decode(resp?.credential);
+    // console.log(decoded);
+    const email = decoded?.email;
+    const name = decoded?.name;
     const token = resp?.tokenId;
     const googleId = resp?.googleId;
     const result = { email, name, token, googleId };
     dispatch(googleLogin({ result, navigate, toast }));
-    console.log(result);
+    // console.log(result);
   };
 
   const googleFailure = (error) => {
     toast.error(error);
+    console.log(error);
   };
 
   return (
@@ -120,9 +131,17 @@ export default function Login() {
               Sign in
             </Button>
           </CardActions>
-
           <GoogleLogin
-            clientId="725031431148-98vq8r72bca4dbtssddlkeidcvjjru7v.apps.googleusercontent.com"
+            onSuccess={(resp) => googleSuccess(resp)}
+            onError={() => {
+              console.log("Login Failed");
+            }}
+          />
+          {/* <Button onClick={() => login()} variant="primary" fullWidth>
+            Sign in with Google 🚀{" "}
+          </Button> */}
+          {/* <GoogleLogin
+            clientId="923413789011-51nces1aqhkebqcdj7bcloi5m0fd5mpc.apps.googleusercontent.com"
             render={(renderProps) => (
               <Button
                 variant="contained"
@@ -139,7 +158,7 @@ export default function Login() {
             onFailure={googleFailure}
             cookiePolicy={"single_host_origin"}
             plugin_name="React"
-          />
+          /> */}
         </form>
         <Divider sx={{ margin: "0.5rem 0" }} />
         <Box sx={{ textAlign: "center" }}>

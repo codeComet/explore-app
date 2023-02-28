@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://my-explore-app.herokuapp.com/", 
+  baseURL: "https://explore-app-backend.onrender.com/",
   headers: {
     "Access-Control-Allow-Origin": "*",
   },
