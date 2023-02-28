@@ -20,6 +20,7 @@ app.get("/", (req, res) => {
   res.send("welcome to my explore app");
 });
 
+mongoose.set("strictQuery", false);
 mongoose
   .connect(process.env.CONNECTION_URI, {
     useNewUrlParser: true,
